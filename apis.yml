@@ -1,0 +1,19 @@
+aid: acord
+url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/apis.yml
+apis:
+- aid: acord:acord-api
+  name: ACORD XML Standards
+  tags:
+  - Insurance
+  - ACORD
+  - XML
+  - SOAP
+  - Claims
+  image: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/image.png
+  humanURL: https://www.acord.org/standards-architecture/acord-data-standards
+  baseURL: https://claims.insurer-internal.example.com/acord
+  properties:
+  - url: https://www.acord.org/standards-architecture/acord-data-standards
+    type: Documentation
+  description: >-
+    ACORD (Association for Cooperative Operations Research and Development) defines XML standards for insurance data exchange, including property & casualty, life, annuity, and reinsurance. The ACORD SOAP/XML APIs enable claims inquiry, policy administration, and regulatory reporting across insurers, reinsurers, and intermediaries.
