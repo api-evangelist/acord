@@ -1,0 +1,682 @@
+openapi: 3.1.0
+info:
+  title: ACORD Next-Generation Digital Standards (NGDS) API
+  description: >-
+    The ACORD NGDS API provides granular, transaction-centric REST/JSON standards
+    for insurance data exchange covering underwriting, policy management, and claims
+    administration. Based on the ACORD Object Model with JSON and YAML formats for
+    microservices, IoT, and modern API architectures.
+  version: 1.0.0
+  contact:
+    name: ACORD Standards
+    url: https://www.acord.org/standards-architecture/acord-data-standards
+  license:
+    name: ACORD License
+    url: https://www.acord.org
+
+servers:
+  - url: https://api.insurer-internal.example.com/ngds
+    description: NGDS REST API endpoint
+
+security:
+  - oauth2: []
+  - bearerAuth: []
+
+tags:
+  - name: Policy
+    description: Policy administration and management
+  - name: Claims
+    description: Claims inquiry, submission, and management
+  - name: Underwriting
+    description: Underwriting and risk assessment
+  - name: Party
+    description: Insured party and contact management
+
+paths:
+  /policies:
+    get:
+      operationId: listPolicies
+      summary: List policies
+      description: Retrieve a paginated list of insurance policies matching the given filters.
+      tags: [Policy]
+      parameters:
+        - name: policyNumber
+          in: query
+          description: Filter by policy number
+          schema:
+            type: string
+        - name: insuredPartyId
+          in: query
+          description: Filter by insured party identifier
+          schema:
+            type: string
+        - name: lineOfBusiness
+          in: query
+          description: Filter by line of business (e.g., PropertyCasualty, Life, Annuity)
+          schema:
+            type: string
+            enum: [PropertyCasualty, Life, Annuity, Reinsurance]
+        - name: status
+          in: query
+          description: Filter by policy status
+          schema:
+            type: string
+            enum: [Active, Lapsed, Cancelled, Pending, Expired]
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 25
+            maximum: 100
+      responses:
+        '200':
+          description: Paginated list of policies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    post:
+      operationId: createPolicy
+      summary: Create a new policy
+      description: Submit a new insurance policy for underwriting and issuance using ACORD NGDS data model.
+      tags: [Policy]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyRequest'
+      responses:
+        '201':
+          description: Policy created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /policies/{policyId}:
+    get:
+      operationId: getPolicy
+      summary: Get policy by ID
+      description: Retrieve a single insurance policy and all associated coverage details by policy identifier.
+      tags: [Policy]
+      parameters:
+        - name: policyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Policy details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      operationId: updatePolicy
+      summary: Update policy
+      description: Apply endorsements or amendments to an existing policy using ACORD NGDS change transactions.
+      tags: [Policy]
+      parameters:
+        - name: policyId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyUpdate'
+      responses:
+        '200':
+          description: Policy updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /claims:
+    get:
+      operationId: listClaims
+      summary: List claims
+      description: Retrieve a list of claims with optional filtering by policy, status, or date range.
+      tags: [Claims]
+      parameters:
+        - name: policyId
+          in: query
+          schema:
+            type: string
+        - name: claimNumber
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [Open, Closed, Pending, Denied, Paid]
+        - name: lossDateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: lossDateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: List of claims
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaimList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      operationId: submitClaim
+      summary: Submit a new claim
+      description: Submit a first notice of loss (FNOL) using ACORD NGDS claims transaction model.
+      tags: [Claims]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimRequest'
+      responses:
+        '201':
+          description: Claim submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /claims/{claimId}:
+    get:
+      operationId: getClaim
+      summary: Get claim by ID
+      description: Retrieve full claim details including loss information, reserves, and payment history.
+      tags: [Claims]
+      parameters:
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Claim details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /parties:
+    get:
+      operationId: listParties
+      summary: List parties
+      description: Retrieve parties (insureds, claimants, agents, brokers) registered in the system.
+      tags: [Party]
+      parameters:
+        - name: partyType
+          in: query
+          schema:
+            type: string
+            enum: [Insured, Claimant, Agent, Broker, Carrier]
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of parties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyList'
+
+    post:
+      operationId: createParty
+      summary: Create a party
+      description: Register a new party (insured, claimant, or contact) using the ACORD NGDS Party object model.
+      tags: [Party]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyRequest'
+      responses:
+        '201':
+          description: Party created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Party'
+
+  /underwriting/submissions:
+    post:
+      operationId: submitUnderwritingSubmission
+      summary: Submit underwriting application
+      description: Submit an insurance application for underwriting review using ACORD NGDS underwriting transaction.
+      tags: [Underwriting]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnderwritingSubmission'
+      responses:
+        '201':
+          description: Submission created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnderwritingSubmissionResponse'
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+          scopes:
+            read:policies: Read policy data
+            write:policies: Create and modify policies
+            read:claims: Read claim data
+            write:claims: Submit and update claims
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Policy:
+      type: object
+      description: ACORD NGDS Policy object representing an insurance contract
+      properties:
+        policyId:
+          type: string
+          description: Unique internal policy identifier
+        policyNumber:
+          type: string
+          description: Carrier-assigned policy number
+        lineOfBusiness:
+          type: string
+          enum: [PropertyCasualty, Life, Annuity, Reinsurance]
+        status:
+          type: string
+          enum: [Active, Lapsed, Cancelled, Pending, Expired]
+        effectiveDate:
+          type: string
+          format: date
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+          format: double
+        currency:
+          type: string
+          default: USD
+        insuredParty:
+          $ref: '#/components/schemas/Party'
+        coverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coverage'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    PolicyRequest:
+      type: object
+      required: [lineOfBusiness, effectiveDate, expirationDate, insuredParty]
+      properties:
+        lineOfBusiness:
+          type: string
+          enum: [PropertyCasualty, Life, Annuity, Reinsurance]
+        effectiveDate:
+          type: string
+          format: date
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+          format: double
+        currency:
+          type: string
+          default: USD
+        insuredParty:
+          $ref: '#/components/schemas/PartyRequest'
+        coverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoverageRequest'
+
+    PolicyUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [Active, Lapsed, Cancelled, Pending, Expired]
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+        endorsements:
+          type: array
+          items:
+            type: object
+            properties:
+              endorsementNumber:
+                type: string
+              description:
+                type: string
+              effectiveDate:
+                type: string
+                format: date
+
+    PolicyList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Coverage:
+      type: object
+      properties:
+        coverageId:
+          type: string
+        coverageType:
+          type: string
+        limit:
+          type: number
+        deductible:
+          type: number
+        premium:
+          type: number
+        currency:
+          type: string
+
+    CoverageRequest:
+      type: object
+      required: [coverageType, limit]
+      properties:
+        coverageType:
+          type: string
+        limit:
+          type: number
+        deductible:
+          type: number
+        premium:
+          type: number
+        currency:
+          type: string
+          default: USD
+
+    Claim:
+      type: object
+      properties:
+        claimId:
+          type: string
+        claimNumber:
+          type: string
+        policyId:
+          type: string
+        policyNumber:
+          type: string
+        status:
+          type: string
+          enum: [Open, Closed, Pending, Denied, Paid]
+        lossDate:
+          type: string
+          format: date
+        reportedDate:
+          type: string
+          format: date
+        lossDescription:
+          type: string
+        lossLocation:
+          $ref: '#/components/schemas/Address'
+        claimant:
+          $ref: '#/components/schemas/Party'
+        reserveAmount:
+          type: number
+        paidAmount:
+          type: number
+        currency:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    ClaimRequest:
+      type: object
+      required: [policyId, lossDate, lossDescription]
+      properties:
+        policyId:
+          type: string
+        lossDate:
+          type: string
+          format: date
+        lossDescription:
+          type: string
+        lossLocation:
+          $ref: '#/components/schemas/Address'
+        claimant:
+          $ref: '#/components/schemas/PartyRequest'
+        estimatedLossAmount:
+          type: number
+
+    ClaimList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Claim'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Party:
+      type: object
+      properties:
+        partyId:
+          type: string
+        partyType:
+          type: string
+          enum: [Insured, Claimant, Agent, Broker, Carrier]
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+
+    PartyRequest:
+      type: object
+      required: [partyType]
+      properties:
+        partyType:
+          type: string
+          enum: [Insured, Claimant, Agent, Broker, Carrier]
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+
+    PartyList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
+
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum: [Phone, Email, Fax]
+        value:
+          type: string
+
+    UnderwritingSubmission:
+      type: object
+      required: [lineOfBusiness, applicant, requestedEffectiveDate]
+      properties:
+        lineOfBusiness:
+          type: string
+        applicant:
+          $ref: '#/components/schemas/PartyRequest'
+        requestedEffectiveDate:
+          type: string
+          format: date
+        requestedExpirationDate:
+          type: string
+          format: date
+        riskDetails:
+          type: object
+          additionalProperties: true
+
+    UnderwritingSubmissionResponse:
+      type: object
+      properties:
+        submissionId:
+          type: string
+        status:
+          type: string
+          enum: [Received, UnderReview, Approved, Declined, RequiresMoreInfo]
+        submittedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

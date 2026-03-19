@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/acord-policy-schema.json",
+  "title": "ACORD Policy",
+  "description": "JSON Schema for an ACORD NGDS insurance policy object, representing an insurance contract with coverages and insured party.",
+  "type": "object",
+  "required": ["policyId", "policyNumber", "lineOfBusiness", "status", "effectiveDate", "expirationDate"],
+  "properties": {
+    "policyId": {
+      "type": "string",
+      "description": "Unique internal policy identifier"
+    },
+    "policyNumber": {
+      "type": "string",
+      "description": "Carrier-assigned policy number"
+    },
+    "lineOfBusiness": {
+      "type": "string",
+      "description": "Insurance line of business",
+      "enum": ["PropertyCasualty", "Life", "Annuity", "Reinsurance"]
+    },
+    "status": {
+      "type": "string",
+      "description": "Current policy status",
+      "enum": ["Active", "Lapsed", "Cancelled", "Pending", "Expired"]
+    },
+    "effectiveDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Policy effective date"
+    },
+    "expirationDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Policy expiration date"
+    },
+    "premiumAmount": {
+      "type": "number",
+      "description": "Total policy premium amount",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code",
+      "default": "USD",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "insuredParty": {
+      "$ref": "#/$defs/Party"
+    },
+    "coverages": {
+      "type": "array",
+      "description": "List of coverages under the policy",
+      "items": {
+        "$ref": "#/$defs/Coverage"
+      }
+    },
+    "endorsements": {
+      "type": "array",
+      "description": "Policy endorsements and amendments",
+      "items": {
+        "$ref": "#/$defs/Endorsement"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "Party": {
+      "type": "object",
+      "description": "ACORD NGDS Party representing an insured, claimant, agent, or broker",
+      "required": ["partyId", "partyType"],
+      "properties": {
+        "partyId": {
+          "type": "string"
+        },
+        "partyType": {
+          "type": "string",
+          "enum": ["Insured", "Claimant", "Agent", "Broker", "Carrier"]
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "organizationName": {
+          "type": "string"
+        },
+        "taxId": {
+          "type": "string",
+          "description": "Tax identification number (SSN or EIN)"
+        },
+        "address": {
+          "$ref": "#/$defs/Address"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Contact"
+          }
+        }
+      }
+    },
+    "Coverage": {
+      "type": "object",
+      "description": "Insurance coverage detail",
+      "required": ["coverageId", "coverageType"],
+      "properties": {
+        "coverageId": {
+          "type": "string"
+        },
+        "coverageType": {
+          "type": "string",
+          "description": "Type of coverage (e.g., BodilyInjury, PropertyDamage, Medical)"
+        },
+        "limit": {
+          "type": "number",
+          "minimum": 0
+        },
+        "deductible": {
+          "type": "number",
+          "minimum": 0
+        },
+        "premium": {
+          "type": "number",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "default": "USD"
+        }
+      }
+    },
+    "Endorsement": {
+      "type": "object",
+      "description": "Policy endorsement or amendment",
+      "required": ["endorsementNumber", "effectiveDate"],
+      "properties": {
+        "endorsementNumber": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "premiumChange": {
+          "type": "number"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "street1": {
+          "type": "string"
+        },
+        "street2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "default": "US"
+        }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "required": ["contactType", "value"],
+      "properties": {
+        "contactType": {
+          "type": "string",
+          "enum": ["Phone", "Email", "Fax"]
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "acord": "https://www.acord.org/standards-architecture/acord-data-standards/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Policy": {
+      "@id": "acord:Policy",
+      "@context": {
+        "policyId": {"@id": "acord:policyId", "@type": "xsd:string"},
+        "policyNumber": {"@id": "acord:policyNumber", "@type": "xsd:string"},
+        "lineOfBusiness": {"@id": "acord:lineOfBusiness"},
+        "status": {"@id": "acord:policyStatus"},
+        "effectiveDate": {"@id": "schema:validFrom", "@type": "xsd:date"},
+        "expirationDate": {"@id": "schema:validThrough", "@type": "xsd:date"},
+        "premiumAmount": {"@id": "acord:premiumAmount", "@type": "xsd:decimal"},
+        "currency": {"@id": "schema:currency"},
+        "insuredParty": {"@id": "acord:insuredParty"},
+        "coverages": {"@id": "acord:coverage", "@container": "@set"},
+        "endorsements": {"@id": "acord:endorsement", "@container": "@set"}
+      }
+    },
+
+    "Claim": {
+      "@id": "acord:Claim",
+      "@context": {
+        "claimId": {"@id": "acord:claimId", "@type": "xsd:string"},
+        "claimNumber": {"@id": "acord:claimNumber", "@type": "xsd:string"},
+        "policyId": {"@id": "acord:policyId"},
+        "status": {"@id": "acord:claimStatus"},
+        "lossDate": {"@id": "acord:lossDate", "@type": "xsd:date"},
+        "reportedDate": {"@id": "acord:reportedDate", "@type": "xsd:date"},
+        "lossDescription": {"@id": "acord:lossDescription", "@type": "xsd:string"},
+        "lossType": {"@id": "acord:lossType"},
+        "lossLocation": {"@id": "schema:location"},
+        "claimant": {"@id": "acord:claimant"},
+        "reserveAmount": {"@id": "acord:reserveAmount", "@type": "xsd:decimal"},
+        "paidAmount": {"@id": "acord:paidAmount", "@type": "xsd:decimal"}
+      }
+    },
+
+    "Party": {
+      "@id": "schema:Person",
+      "@context": {
+        "partyId": {"@id": "acord:partyId", "@type": "xsd:string"},
+        "partyType": {"@id": "acord:partyRole"},
+        "firstName": {"@id": "schema:givenName"},
+        "lastName": {"@id": "schema:familyName"},
+        "organizationName": {"@id": "schema:legalName"},
+        "taxId": {"@id": "acord:taxIdentifier"},
+        "address": {"@id": "schema:address"},
+        "contacts": {"@id": "schema:contactPoint", "@container": "@set"}
+      }
+    },
+
+    "Coverage": {
+      "@id": "acord:Coverage",
+      "@context": {
+        "coverageId": {"@id": "acord:coverageId"},
+        "coverageType": {"@id": "acord:coverageType"},
+        "limit": {"@id": "acord:coverageLimit", "@type": "xsd:decimal"},
+        "deductible": {"@id": "acord:deductible", "@type": "xsd:decimal"},
+        "premium": {"@id": "acord:premium", "@type": "xsd:decimal"}
+      }
+    },
+
+    "Address": {
+      "@id": "schema:PostalAddress",
+      "@context": {
+        "street1": {"@id": "schema:streetAddress"},
+        "city": {"@id": "schema:addressLocality"},
+        "state": {"@id": "schema:addressRegion"},
+        "postalCode": {"@id": "schema:postalCode"},
+        "country": {"@id": "schema:addressCountry"}
+      }
+    }
+  }
+}

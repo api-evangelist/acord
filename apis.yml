@@ -40,6 +40,8 @@ apis:
     type: Documentation
   - url: https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards
     type: Reference
+  - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/openapi/acord-ngds-openapi.yml
+    type: OpenAPI
   description: >-
     The ACORD Next-Generation Digital Standards (NGDS) Object Model provides granular, transaction-centric standards for APIs, microservices, IoT, and RESTful architectures. Based on JSON and YAML data-interchange formats, NGDS enables modern insurance data exchange for underwriting, policy management, and claims administration.
 
@@ -73,6 +75,14 @@ common:
     type: Documentation
   - url: https://www.acord.org/standards-architecture/get-involved/standards-project-advisory-groups
     type: Support
+  - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/openapi/acord-ngds-openapi.yml
+    type: OpenAPI
+  - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/acord-policy-schema.json
+    type: JSONSchema
+  - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/acord-claim-schema.json
+    type: JSONSchema
+  - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-ld/acord-context.jsonld
+    type: JSONLDContext
 
 maintainers:
 - name: Kin Lane
