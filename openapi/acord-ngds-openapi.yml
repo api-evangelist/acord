@@ -23,15 +23,15 @@ security:
   - bearerAuth: []
 
 tags:
-  - name: Policy
-    description: Policy administration and management
   - name: Claims
     description: Claims inquiry, submission, and management
-  - name: Underwriting
-    description: Underwriting and risk assessment
   - name: Party
     description: Insured party and contact management
 
+  - name: Policy
+    description: Policy administration and management
+  - name: Underwriting
+    description: Underwriting and risk assessment
 paths:
   /policies:
     get:
