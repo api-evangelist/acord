@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-structure/acord-claim-structure.json",
+  "description": "JSON Schema for an ACORD NGDS insurance claim object, representing a first notice of loss through claim settlement.",
+  "type": "object",
+  "required": [
+    "claimId",
+    "claimNumber",
+    "policyId",
+    "status",
+    "lossDate"
+  ],
+  "properties": {
+    "claimId": {
+      "type": "string",
+      "description": "Unique internal claim identifier"
+    },
+    "claimNumber": {
+      "type": "string",
+      "description": "Carrier-assigned claim number"
+    },
+    "policyId": {
+      "type": "string",
+      "description": "Reference to the associated policy"
+    },
+    "policyNumber": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Closed",
+        "Pending",
+        "Denied",
+        "Paid"
+      ]
+    },
+    "lossDate": {
+      "type": "date",
+      "description": "Date the loss or incident occurred"
+    },
+    "reportedDate": {
+      "type": "date",
+      "description": "Date the claim was reported"
+    },
+    "lossDescription": {
+      "type": "string",
+      "description": "Narrative description of the loss"
+    },
+    "lossType": {
+      "type": "string",
+      "description": "Type of loss event",
+      "enum": [
+        "Collision",
+        "Theft",
+        "Fire",
+        "Water",
+        "Wind",
+        "Liability",
+        "Medical",
+        "Other"
+      ]
+    },
+    "lossLocation": {
+      "$ref": "#/$defs/Address"
+    },
+    "claimant": {
+      "$ref": "#/$defs/Party"
+    },
+    "adjuster": {
+      "$ref": "#/$defs/Party"
+    },
+    "reserveAmount": {
+      "type": "double",
+      "minimum": 0,
+      "description": "Current reserve amount set for this claim"
+    },
+    "paidAmount": {
+      "type": "double",
+      "minimum": 0,
+      "description": "Total amount paid on this claim to date"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "payments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClaimPayment"
+      }
+    },
+    "createdAt": {
+      "type": "datetime"
+    },
+    "updatedAt": {
+      "type": "datetime"
+    }
+  },
+  "definitions": {
+    "Party": {
+      "type": "object",
+      "required": [
+        "partyType"
+      ],
+      "properties": {
+        "partyId": {
+          "type": "string"
+        },
+        "partyType": {
+          "type": "string",
+          "enum": [
+            "Insured",
+            "Claimant",
+            "Agent",
+            "Broker",
+            "Carrier",
+            "Adjuster"
+          ]
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "organizationName": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/$defs/Address"
+        }
+      },
+      "name": "Party"
+    },
+    "ClaimPayment": {
+      "type": "object",
+      "required": [
+        "paymentId",
+        "amount",
+        "paymentDate"
+      ],
+      "properties": {
+        "paymentId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "double",
+          "minimum": 0
+        },
+        "paymentDate": {
+          "type": "date"
+        },
+        "paymentType": {
+          "type": "string",
+          "enum": [
+            "Check",
+            "EFT",
+            "Wire"
+          ]
+        },
+        "coverageType": {
+          "type": "string"
+        }
+      },
+      "name": "ClaimPayment"
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "street1": {
+          "type": "string"
+        },
+        "street2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "default": "US"
+        }
+      },
+      "name": "Address"
+    }
+  },
+  "name": "ACORD Claim"
+}

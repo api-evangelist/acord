@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-structure/ngds-contact-structure.json",
+  "description": "Contact schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "contactType": {
+      "type": "string",
+      "enum": [
+        "Phone",
+        "Email",
+        "Fax"
+      ]
+    },
+    "value": {
+      "type": "string"
+    }
+  },
+  "name": "Contact"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-structure/ngds-claim-request-structure.json",
+  "description": "ClaimRequest schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "policyId": {
+      "type": "string"
+    },
+    "lossDate": {
+      "type": "date"
+    },
+    "lossDescription": {
+      "type": "string"
+    },
+    "lossLocation": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "claimant": {
+      "$ref": "#/components/schemas/PartyRequest"
+    },
+    "estimatedLossAmount": {
+      "type": "double"
+    }
+  },
+  "required": [
+    "policyId",
+    "lossDate",
+    "lossDescription"
+  ],
+  "name": "ClaimRequest"
+}

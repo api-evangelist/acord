@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/ngds-underwriting-submission-schema.json",
+  "title": "UnderwritingSubmission",
+  "description": "UnderwritingSubmission schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "lineOfBusiness": {
+      "type": "string"
+    },
+    "applicant": {
+      "$ref": "#/components/schemas/PartyRequest"
+    },
+    "requestedEffectiveDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "requestedExpirationDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "riskDetails": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "lineOfBusiness",
+    "applicant",
+    "requestedEffectiveDate"
+  ]
+}

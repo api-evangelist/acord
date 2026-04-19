@@ -15,64 +15,64 @@ info:
     url: https://www.acord.org
 
 servers:
-  - url: https://api.insurer-internal.example.com/ngds
-    description: NGDS REST API endpoint
+- url: https://api.insurer-internal.example.com/ngds
+  description: NGDS REST API endpoint
 
 security:
-  - oauth2: []
-  - bearerAuth: []
+- oauth2: []
+- bearerAuth: []
 
 tags:
-  - name: Claims
-    description: Claims inquiry, submission, and management
-  - name: Party
-    description: Insured party and contact management
+- name: Claims
+  description: Claims inquiry, submission, and management
+- name: Party
+  description: Insured party and contact management
 
-  - name: Policy
-    description: Policy administration and management
-  - name: Underwriting
-    description: Underwriting and risk assessment
+- name: Policy
+  description: Policy administration and management
+- name: Underwriting
+  description: Underwriting and risk assessment
 paths:
   /policies:
     get:
       operationId: listPolicies
-      summary: List policies
+      summary: ACORD List Policies
       description: Retrieve a paginated list of insurance policies matching the given filters.
       tags: [Policy]
       parameters:
-        - name: policyNumber
-          in: query
-          description: Filter by policy number
-          schema:
-            type: string
-        - name: insuredPartyId
-          in: query
-          description: Filter by insured party identifier
-          schema:
-            type: string
-        - name: lineOfBusiness
-          in: query
-          description: Filter by line of business (e.g., PropertyCasualty, Life, Annuity)
-          schema:
-            type: string
-            enum: [PropertyCasualty, Life, Annuity, Reinsurance]
-        - name: status
-          in: query
-          description: Filter by policy status
-          schema:
-            type: string
-            enum: [Active, Lapsed, Cancelled, Pending, Expired]
-        - name: page
-          in: query
-          schema:
-            type: integer
-            default: 1
-        - name: pageSize
-          in: query
-          schema:
-            type: integer
-            default: 25
-            maximum: 100
+      - name: policyNumber
+        in: query
+        description: Filter by policy number
+        schema:
+          type: string
+      - name: insuredPartyId
+        in: query
+        description: Filter by insured party identifier
+        schema:
+          type: string
+      - name: lineOfBusiness
+        in: query
+        description: Filter by line of business (e.g., PropertyCasualty, Life, Annuity)
+        schema:
+          type: string
+          enum: [PropertyCasualty, Life, Annuity, Reinsurance]
+      - name: status
+        in: query
+        description: Filter by policy status
+        schema:
+          type: string
+          enum: [Active, Lapsed, Cancelled, Pending, Expired]
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 25
+          maximum: 100
       responses:
         '200':
           description: Paginated list of policies
@@ -80,14 +80,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PolicyList'
+              examples:
+                ListPolicies200Example:
+                  summary: Default listPolicies 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - {}
+                    pagination:
+                      page: {}
+                      pageSize: {}
+                      totalPages: {}
+                      totalItems: {}
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createPolicy
-      summary: Create a new policy
+      summary: ACORD Create a New Policy
       description: Submit a new insurance policy for underwriting and issuance using ACORD NGDS data model.
       tags: [Policy]
       requestBody:
@@ -96,6 +111,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PolicyRequest'
+            examples:
+              CreatePolicyRequestExample:
+                summary: Default createPolicy request
+                x-microcks-default: true
+                value:
+                  lineOfBusiness: PropertyCasualty
+                  effectiveDate: '2025-03-15'
+                  expirationDate: '2025-03-15'
+                  premiumAmount: 5000.0
+                  currency: sample-value
+                  insuredParty:
+                    partyType: {}
+                    firstName: {}
+                    lastName: {}
+                    organizationName: {}
+                    taxId: {}
+                    address: {}
+                    contacts: {}
+                  coverages:
+                  - {}
       responses:
         '201':
           description: Policy created successfully
@@ -103,23 +138,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Policy'
+              examples:
+                CreatePolicy201Example:
+                  summary: Default createPolicy 201 response
+                  x-microcks-default: true
+                  value:
+                    policyId: '500123'
+                    policyNumber: POL-2025-001234
+                    lineOfBusiness: PropertyCasualty
+                    status: Active
+                    effectiveDate: '2025-03-15'
+                    expirationDate: '2025-03-15'
+                    premiumAmount: 5000.0
+                    currency: sample-value
+                    insuredParty:
+                      partyId: {}
+                      partyType: {}
+                      firstName: {}
+                      lastName: {}
+                      organizationName: {}
+                      taxId: {}
+                      address: {}
+                      contacts: {}
+                    coverages:
+                    - {}
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /policies/{policyId}:
     get:
       operationId: getPolicy
-      summary: Get policy by ID
+      summary: ACORD Get Policy by ID
       description: Retrieve a single insurance policy and all associated coverage details by policy identifier.
       tags: [Policy]
       parameters:
-        - name: policyId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Policy details
@@ -127,26 +191,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Policy'
+              examples:
+                GetPolicy200Example:
+                  summary: Default getPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    policyId: '500123'
+                    policyNumber: POL-2025-001234
+                    lineOfBusiness: PropertyCasualty
+                    status: Active
+                    effectiveDate: '2025-03-15'
+                    expirationDate: '2025-03-15'
+                    premiumAmount: 5000.0
+                    currency: sample-value
+                    insuredParty:
+                      partyId: {}
+                      partyType: {}
+                      firstName: {}
+                      lastName: {}
+                      organizationName: {}
+                      taxId: {}
+                      address: {}
+                      contacts: {}
+                    coverages:
+                    - {}
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     patch:
       operationId: updatePolicy
-      summary: Update policy
+      summary: ACORD Update Policy
       description: Apply endorsements or amendments to an existing policy using ACORD NGDS change transactions.
       tags: [Policy]
       parameters:
-        - name: policyId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/PolicyUpdate'
+            examples:
+              UpdatePolicyRequestExample:
+                summary: Default updatePolicy request
+                x-microcks-default: true
+                value:
+                  status: Active
+                  expirationDate: '2025-03-15'
+                  premiumAmount: 5000.0
+                  endorsements:
+                  - endorsementNumber: {}
+                    description: {}
+                    effectiveDate: {}
       responses:
         '200':
           description: Policy updated
@@ -154,39 +259,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Policy'
+              examples:
+                UpdatePolicy200Example:
+                  summary: Default updatePolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    policyId: '500123'
+                    policyNumber: POL-2025-001234
+                    lineOfBusiness: PropertyCasualty
+                    status: Active
+                    effectiveDate: '2025-03-15'
+                    expirationDate: '2025-03-15'
+                    premiumAmount: 5000.0
+                    currency: sample-value
+                    insuredParty:
+                      partyId: {}
+                      partyType: {}
+                      firstName: {}
+                      lastName: {}
+                      organizationName: {}
+                      taxId: {}
+                      address: {}
+                      contacts: {}
+                    coverages:
+                    - {}
+                    createdAt: '2025-03-15T14:30:00Z'
+                    updatedAt: '2025-03-15T14:30:00Z'
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /claims:
     get:
       operationId: listClaims
-      summary: List claims
+      summary: ACORD List Claims
       description: Retrieve a list of claims with optional filtering by policy, status, or date range.
       tags: [Claims]
       parameters:
-        - name: policyId
-          in: query
-          schema:
-            type: string
-        - name: claimNumber
-          in: query
-          schema:
-            type: string
-        - name: status
-          in: query
-          schema:
-            type: string
-            enum: [Open, Closed, Pending, Denied, Paid]
-        - name: lossDateFrom
-          in: query
-          schema:
-            type: string
-            format: date
-        - name: lossDateTo
-          in: query
-          schema:
-            type: string
-            format: date
+      - name: policyId
+        in: query
+        schema:
+          type: string
+      - name: claimNumber
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum: [Open, Closed, Pending, Denied, Paid]
+      - name: lossDateFrom
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: lossDateTo
+        in: query
+        schema:
+          type: string
+          format: date
       responses:
         '200':
           description: List of claims
@@ -194,12 +328,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClaimList'
+              examples:
+                ListClaims200Example:
+                  summary: Default listClaims 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - {}
+                    pagination:
+                      page: {}
+                      pageSize: {}
+                      totalPages: {}
+                      totalItems: {}
         '401':
           $ref: '#/components/responses/Unauthorized'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: submitClaim
-      summary: Submit a new claim
+      summary: ACORD Submit a New Claim
       description: Submit a first notice of loss (FNOL) using ACORD NGDS claims transaction model.
       tags: [Claims]
       requestBody:
@@ -208,6 +357,30 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ClaimRequest'
+            examples:
+              SubmitClaimRequestExample:
+                summary: Default submitClaim request
+                x-microcks-default: true
+                value:
+                  policyId: sample-value
+                  lossDate: '2025-03-15'
+                  lossDescription: sample-value
+                  lossLocation:
+                    street1: {}
+                    street2: {}
+                    city: {}
+                    state: {}
+                    postalCode: {}
+                    country: {}
+                  claimant:
+                    partyType: {}
+                    firstName: {}
+                    lastName: {}
+                    organizationName: {}
+                    taxId: {}
+                    address: {}
+                    contacts: {}
+                  estimatedLossAmount: 5000.0
       responses:
         '201':
           description: Claim submitted
@@ -215,21 +388,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Claim'
+              examples:
+                SubmitClaim201Example:
+                  summary: Default submitClaim 201 response
+                  x-microcks-default: true
+                  value:
+                    claimId: sample-value
+                    claimNumber: sample-value
+                    policyId: sample-value
+                    policyNumber: sample-value
+                    status: Open
+                    lossDate: '2025-03-15'
+                    reportedDate: '2025-03-15'
+                    lossDescription: sample-value
+                    lossLocation:
+                      street1: {}
+                      street2: {}
+                      city: {}
+                      state: {}
+                      postalCode: {}
+                      country: {}
+                    claimant:
+                      partyId: {}
+                      partyType: {}
+                      firstName: {}
+                      lastName: {}
+                      organizationName: {}
+                      taxId: {}
+                      address: {}
+                      contacts: {}
+                    reserveAmount: 5000.0
+                    paidAmount: 5000.0
+                    currency: sample-value
+                    createdAt: '2025-03-15T14:30:00Z'
         '400':
           $ref: '#/components/responses/BadRequest'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /claims/{claimId}:
     get:
       operationId: getClaim
-      summary: Get claim by ID
+      summary: ACORD Get Claim by ID
       description: Retrieve full claim details including loss information, reserves, and payment history.
       tags: [Claims]
       parameters:
-        - name: claimId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: claimId
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Claim details
@@ -237,25 +446,61 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Claim'
+              examples:
+                GetClaim200Example:
+                  summary: Default getClaim 200 response
+                  x-microcks-default: true
+                  value:
+                    claimId: sample-value
+                    claimNumber: sample-value
+                    policyId: sample-value
+                    policyNumber: sample-value
+                    status: Open
+                    lossDate: '2025-03-15'
+                    reportedDate: '2025-03-15'
+                    lossDescription: sample-value
+                    lossLocation:
+                      street1: {}
+                      street2: {}
+                      city: {}
+                      state: {}
+                      postalCode: {}
+                      country: {}
+                    claimant:
+                      partyId: {}
+                      partyType: {}
+                      firstName: {}
+                      lastName: {}
+                      organizationName: {}
+                      taxId: {}
+                      address: {}
+                      contacts: {}
+                    reserveAmount: 5000.0
+                    paidAmount: 5000.0
+                    currency: sample-value
+                    createdAt: '2025-03-15T14:30:00Z'
         '404':
           $ref: '#/components/responses/NotFound'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /parties:
     get:
       operationId: listParties
-      summary: List parties
+      summary: ACORD List Parties
       description: Retrieve parties (insureds, claimants, agents, brokers) registered in the system.
       tags: [Party]
       parameters:
-        - name: partyType
-          in: query
-          schema:
-            type: string
-            enum: [Insured, Claimant, Agent, Broker, Carrier]
-        - name: name
-          in: query
-          schema:
-            type: string
+      - name: partyType
+        in: query
+        schema:
+          type: string
+          enum: [Insured, Claimant, Agent, Broker, Carrier]
+      - name: name
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: List of parties
@@ -264,9 +509,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/PartyList'
 
+              examples:
+                ListParties200Example:
+                  summary: Default listParties 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - {}
+                    pagination:
+                      page: {}
+                      pageSize: {}
+                      totalPages: {}
+                      totalItems: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createParty
-      summary: Create a party
+      summary: ACORD Create a Party
       description: Register a new party (insured, claimant, or contact) using the ACORD NGDS Party object model.
       tags: [Party]
       requestBody:
@@ -275,6 +535,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PartyRequest'
+            examples:
+              CreatePartyRequestExample:
+                summary: Default createParty request
+                x-microcks-default: true
+                value:
+                  partyType: Insured
+                  firstName: sample-value
+                  lastName: sample-value
+                  organizationName: sample-value
+                  taxId: sample-value
+                  address:
+                    street1: {}
+                    street2: {}
+                    city: {}
+                    state: {}
+                    postalCode: {}
+                    country: {}
+                  contacts:
+                  - {}
       responses:
         '201':
           description: Party created
@@ -283,10 +562,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/Party'
 
+              examples:
+                CreateParty201Example:
+                  summary: Default createParty 201 response
+                  x-microcks-default: true
+                  value:
+                    partyId: sample-value
+                    partyType: Insured
+                    firstName: sample-value
+                    lastName: sample-value
+                    organizationName: sample-value
+                    taxId: sample-value
+                    address:
+                      street1: {}
+                      street2: {}
+                      city: {}
+                      state: {}
+                      postalCode: {}
+                      country: {}
+                    contacts:
+                    - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /underwriting/submissions:
     post:
       operationId: submitUnderwritingSubmission
-      summary: Submit underwriting application
+      summary: ACORD Submit Underwriting Application
       description: Submit an insurance application for underwriting review using ACORD NGDS underwriting transaction.
       tags: [Underwriting]
       requestBody:
@@ -295,6 +597,23 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UnderwritingSubmission'
+            examples:
+              SubmitUnderwritingSubmissionRequestExample:
+                summary: Default submitUnderwritingSubmission request
+                x-microcks-default: true
+                value:
+                  lineOfBusiness: sample-value
+                  applicant:
+                    partyType: {}
+                    firstName: {}
+                    lastName: {}
+                    organizationName: {}
+                    taxId: {}
+                    address: {}
+                    contacts: {}
+                  requestedEffectiveDate: '2025-03-15'
+                  requestedExpirationDate: '2025-03-15'
+                  riskDetails: {}
       responses:
         '201':
           description: Submission created
@@ -303,6 +622,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnderwritingSubmissionResponse'
 
+              examples:
+                SubmitUnderwritingSubmission201Example:
+                  summary: Default submitUnderwritingSubmission 201 response
+                  x-microcks-default: true
+                  value:
+                    submissionId: sample-value
+                    status: Received
+                    submittedAt: '2025-03-15T14:30:00Z'
+                    notes: sample-value
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     oauth2:

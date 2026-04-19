@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/ngds-policy-update-schema.json",
+  "title": "PolicyUpdate",
+  "description": "PolicyUpdate schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Lapsed",
+        "Cancelled",
+        "Pending",
+        "Expired"
+      ]
+    },
+    "expirationDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "premiumAmount": {
+      "type": "number"
+    },
+    "endorsements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "endorsementNumber": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "effectiveDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}

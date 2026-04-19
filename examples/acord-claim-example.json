@@ -1,0 +1,22 @@
+{
+  "claimId": "500123",
+  "claimNumber": "POL-2025-001234",
+  "policyId": "500123",
+  "policyNumber": "POL-2025-001234",
+  "status": "Open",
+  "lossDate": "2025-03-15",
+  "reportedDate": "2025-03-15",
+  "lossDescription": "Sample description for this record",
+  "lossType": "Collision",
+  "lossLocation": "sample-value",
+  "claimant": "sample-value",
+  "adjuster": "sample-value",
+  "reserveAmount": 5000.0,
+  "paidAmount": 5000.0,
+  "currency": "USD",
+  "payments": [
+    "sample-value"
+  ],
+  "createdAt": "2025-03-15T14:30:00Z",
+  "updatedAt": "2025-03-15T14:30:00Z"
+}

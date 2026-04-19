@@ -1,0 +1,254 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: ACORD
+  description: >-
+    Vocabulary covering the ACORD Next-Generation Digital Standards (NGDS) API taxonomy,
+    mapping operational dimensions (resources, actions, schemas) and capability dimensions
+    (workflows, personas) for the insurance data exchange ecosystem.
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - name: ACORD NGDS API
+      namespace: acord-ngds
+      version: "1.0.0"
+      baseUrl: https://api.insurer-internal.example.com/ngds
+      status: active
+
+  resources:
+    - name: policies
+      apis: [acord-ngds]
+      actions: [list, create, get, update]
+      description: Insurance policy contracts with coverages, insured parties, and lifecycle management
+
+    - name: claims
+      apis: [acord-ngds]
+      actions: [list, submit, get]
+      description: Insurance claims including first notice of loss, reserves, and payment tracking
+
+    - name: parties
+      apis: [acord-ngds]
+      actions: [list, create]
+      description: Insurance parties including insureds, claimants, agents, brokers, and carriers
+
+    - name: underwriting-submissions
+      apis: [acord-ngds]
+      actions: [submit]
+      description: Underwriting applications for risk assessment and policy issuance
+
+  actions:
+    - name: list
+      httpMethod: GET
+      pattern: read
+      description: Retrieve paginated collections of resources with filtering
+
+    - name: get
+      httpMethod: GET
+      pattern: read
+      description: Retrieve a single resource by identifier
+
+    - name: create
+      httpMethod: POST
+      pattern: write
+      description: Create a new resource entity
+
+    - name: update
+      httpMethod: PATCH
+      pattern: write
+      description: Partially update an existing resource with endorsements or amendments
+
+    - name: submit
+      httpMethod: POST
+      pattern: write
+      description: Submit a transaction (claim FNOL, underwriting application) for processing
+
+  schemas:
+    core:
+      - name: Policy
+        description: ACORD NGDS insurance policy object with coverages and insured party
+        keyProperties: [policyId, policyNumber, lineOfBusiness, status, effectiveDate, expirationDate, premiumAmount]
+
+      - name: Claim
+        description: ACORD NGDS claim object with loss details, reserves, and payment tracking
+        keyProperties: [claimId, claimNumber, policyId, status, lossDate, reserveAmount, paidAmount]
+
+      - name: Party
+        description: ACORD NGDS party object representing insureds, agents, brokers, or carriers
+        keyProperties: [partyId, partyType, firstName, lastName, organizationName, address]
+
+      - name: Coverage
+        description: Insurance coverage within a policy with limits and deductibles
+        keyProperties: [coverageId, coverageType, limit, deductible, premium]
+
+      - name: Address
+        description: Physical address for parties and loss locations
+        keyProperties: [street1, city, state, postalCode, country]
+
+    transactions:
+      - name: UnderwritingSubmission
+        description: Insurance application submitted for underwriting review
+        keyProperties: [lineOfBusiness, applicant, requestedEffectiveDate, riskDetails]
+
+      - name: UnderwritingSubmissionResponse
+        description: Response to an underwriting submission with status and notes
+        keyProperties: [submissionId, status, submittedAt, notes]
+
+  parameters:
+    identifiers:
+      - name: policyId
+        description: Unique internal policy identifier
+      - name: claimId
+        description: Unique claim identifier
+      - name: partyId
+        description: Unique party identifier
+
+    filters:
+      - name: policyNumber
+        description: Carrier-assigned policy number filter
+      - name: insuredPartyId
+        description: Filter policies by insured party
+      - name: lineOfBusiness
+        description: Filter by insurance line (PropertyCasualty, Life, Annuity, Reinsurance)
+      - name: status
+        description: Filter by resource status
+      - name: partyType
+        description: Filter parties by type
+
+    pagination:
+      - name: page
+        description: Page number for paginated results
+      - name: pageSize
+        description: Number of results per page (max 100)
+
+  enums:
+    lineOfBusiness:
+      - PropertyCasualty
+      - Life
+      - Annuity
+      - Reinsurance
+
+    policyStatus:
+      - Active
+      - Lapsed
+      - Cancelled
+      - Pending
+      - Expired
+
+    claimStatus:
+      - Open
+      - Closed
+      - Pending
+      - Denied
+      - Paid
+
+    partyType:
+      - Insured
+      - Claimant
+      - Agent
+      - Broker
+      - Carrier
+
+    underwritingStatus:
+      - Received
+      - UnderReview
+      - Approved
+      - Declined
+      - RequiresMoreInfo
+
+  authentication:
+    schemes:
+      - name: oauth2
+        type: OAuth2
+        flow: clientCredentials
+        scopes:
+          - read:policies
+          - write:policies
+          - read:claims
+          - write:claims
+
+      - name: bearerAuth
+        type: Bearer
+        format: JWT
+
+capability:
+  workflows:
+    - name: Insurance Data Exchange
+      file: capabilities/insurance-data-exchange.yaml
+      description: Unified ACORD NGDS workflow for policy, claims, party, and underwriting
+      apisCombined: [acord-ngds]
+      toolCount: 10
+      personas: [Insurance Carrier, Broker, Reinsurer]
+
+  personas:
+    - id: insurance-carrier
+      name: Insurance Carrier
+      description: Primary insurer managing policy issuance, claims, and underwriting
+      workflows: [Insurance Data Exchange]
+
+    - id: broker
+      name: Insurance Broker
+      description: Intermediary managing client policies, claims submissions, and party records
+      workflows: [Insurance Data Exchange]
+
+    - id: reinsurer
+      name: Reinsurer
+      description: Reinsurance company accessing cedant data for risk assessment and settlement
+      workflows: [Insurance Data Exchange]
+
+  domains:
+    - name: Policy Administration
+      resources: [policies, coverages]
+      description: Full lifecycle management of insurance policies from issuance to expiration
+
+    - name: Claims Management
+      resources: [claims]
+      description: First notice of loss, reserves, and payment tracking for insurance claims
+
+    - name: Party Management
+      resources: [parties]
+      description: Registry of all insurance parties including insureds, agents, and carriers
+
+    - name: Underwriting
+      resources: [underwriting-submissions]
+      description: Risk assessment and policy issuance decision workflows
+
+  namespaces:
+    - name: acord-ngds
+      type: consumed
+      description: ACORD NGDS REST API
+
+    - name: acord-insurance-api
+      type: rest-exposed
+      port: 8080
+
+    - name: acord-insurance-mcp
+      type: mcp-exposed
+      port: 9090
+
+  binds:
+    - name: ACORD_BEARER_TOKEN
+      description: Bearer token for ACORD NGDS API authentication
+      workflows: [Insurance Data Exchange]
+
+crossReference:
+  - resource: policies
+    operations: [list-policies, create-policy, get-policy, update-policy]
+    workflows: [Insurance Data Exchange]
+    personas: [Insurance Carrier, Broker]
+
+  - resource: claims
+    operations: [list-claims, submit-claim, get-claim]
+    workflows: [Insurance Data Exchange]
+    personas: [Insurance Carrier, Broker, Reinsurer]
+
+  - resource: parties
+    operations: [list-parties, create-party]
+    workflows: [Insurance Data Exchange]
+    personas: [Insurance Carrier, Broker]
+
+  - resource: underwriting-submissions
+    operations: [submit-underwriting]
+    workflows: [Insurance Data Exchange]
+    personas: [Insurance Carrier, Broker]

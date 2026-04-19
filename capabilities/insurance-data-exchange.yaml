@@ -1,0 +1,272 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: ACORD Insurance Data Exchange
+  description: >-
+    Unified insurance data exchange workflow for policy administration, claims management, party registry,
+    and underwriting using ACORD Next-Generation Digital Standards (NGDS). Used by insurance carriers,
+    brokers, and reinsurers to automate policy lifecycle, claims processing, and underwriting workflows.
+  tags:
+    - ACORD
+    - Claims Management
+    - Insurance
+    - Policy Administration
+    - Standards
+    - Underwriting
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      ACORD_BEARER_TOKEN: ACORD_BEARER_TOKEN
+
+capability:
+  consumes:
+    - import: acord-ngds
+      location: ./shared/acord-ngds.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: acord-insurance-api
+      description: Unified REST API for ACORD-compliant insurance data exchange.
+      resources:
+        - path: /v1/policies
+          name: policies
+          description: Insurance policy lifecycle management
+          operations:
+            - method: GET
+              name: list-policies
+              description: List policies with filtering
+              call: "acord-ngds.list-policies"
+              with:
+                policyNumber: "rest.policyNumber"
+                lineOfBusiness: "rest.lineOfBusiness"
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-policy
+              description: Issue a new insurance policy
+              call: "acord-ngds.create-policy"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/policies/{policyId}
+          name: policy
+          description: Individual policy operations
+          operations:
+            - method: GET
+              name: get-policy
+              description: Get full policy details
+              call: "acord-ngds.get-policy"
+              with:
+                policyId: "rest.policyId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PATCH
+              name: update-policy
+              description: Endorse or amend a policy
+              call: "acord-ngds.update-policy"
+              with:
+                policyId: "rest.policyId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/claims
+          name: claims
+          description: Claims intake and inquiry
+          operations:
+            - method: GET
+              name: list-claims
+              description: List claims with filtering
+              call: "acord-ngds.list-claims"
+              with:
+                policyId: "rest.policyId"
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: submit-claim
+              description: Submit a first notice of loss
+              call: "acord-ngds.submit-claim"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/claims/{claimId}
+          name: claim
+          description: Individual claim operations
+          operations:
+            - method: GET
+              name: get-claim
+              description: Get claim details and payment history
+              call: "acord-ngds.get-claim"
+              with:
+                claimId: "rest.claimId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/parties
+          name: parties
+          description: Insurance party registry
+          operations:
+            - method: GET
+              name: list-parties
+              description: List registered parties
+              call: "acord-ngds.list-parties"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-party
+              description: Register a new party
+              call: "acord-ngds.create-party"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/underwriting/submissions
+          name: underwriting
+          description: Underwriting application submission
+          operations:
+            - method: POST
+              name: submit-underwriting
+              description: Submit an application for underwriting review
+              call: "acord-ngds.submit-underwriting"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: acord-insurance-mcp
+      transport: http
+      description: MCP server for AI-assisted ACORD insurance data exchange workflows.
+      tools:
+        - name: list-policies
+          description: List insurance policies using ACORD NGDS standards with filtering by number, line of business, and status
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "acord-ngds.list-policies"
+          with:
+            policyNumber: "tools.policyNumber"
+            lineOfBusiness: "tools.lineOfBusiness"
+            status: "tools.status"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-policy
+          description: Issue a new ACORD-compliant insurance policy
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.create-policy"
+          with:
+            lineOfBusiness: "tools.lineOfBusiness"
+            effectiveDate: "tools.effectiveDate"
+            expirationDate: "tools.expirationDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-policy
+          description: Retrieve full ACORD policy details including coverages and insured party
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "acord-ngds.get-policy"
+          with:
+            policyId: "tools.policyId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-policy
+          description: Apply endorsements or amendments to an ACORD policy
+          hints:
+            readOnly: false
+            idempotent: true
+          call: "acord-ngds.update-policy"
+          with:
+            policyId: "tools.policyId"
+            status: "tools.status"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-claims
+          description: List insurance claims with ACORD NGDS filtering by policy, status, and loss date range
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "acord-ngds.list-claims"
+          with:
+            policyId: "tools.policyId"
+            status: "tools.status"
+            lossDateFrom: "tools.lossDateFrom"
+            lossDateTo: "tools.lossDateTo"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: submit-claim
+          description: Submit a first notice of loss (FNOL) using ACORD NGDS claims transaction model
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.submit-claim"
+          with:
+            policyId: "tools.policyId"
+            lossDate: "tools.lossDate"
+            lossDescription: "tools.lossDescription"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-claim
+          description: Retrieve full ACORD claim details including reserves and payment history
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "acord-ngds.get-claim"
+          with:
+            claimId: "tools.claimId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-parties
+          description: List insurance parties (insureds, agents, brokers, carriers) from ACORD registry
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "acord-ngds.list-parties"
+          with:
+            partyType: "tools.partyType"
+            name: "tools.name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-party
+          description: Register a new insurance party in the ACORD NGDS party registry
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.create-party"
+          with:
+            partyType: "tools.partyType"
+            firstName: "tools.firstName"
+            lastName: "tools.lastName"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: submit-underwriting
+          description: Submit an insurance application for underwriting review using ACORD NGDS
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.submit-underwriting"
+          with:
+            lineOfBusiness: "tools.lineOfBusiness"
+            requestedEffectiveDate: "tools.effectiveDate"
+          outputParameters:
+            - type: object
+              mapping: "$."

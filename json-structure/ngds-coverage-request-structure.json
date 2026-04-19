@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-structure/ngds-coverage-request-structure.json",
+  "description": "CoverageRequest schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "coverageType": {
+      "type": "string"
+    },
+    "limit": {
+      "type": "double"
+    },
+    "deductible": {
+      "type": "double"
+    },
+    "premium": {
+      "type": "double"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    }
+  },
+  "required": [
+    "coverageType",
+    "limit"
+  ],
+  "name": "CoverageRequest"
+}

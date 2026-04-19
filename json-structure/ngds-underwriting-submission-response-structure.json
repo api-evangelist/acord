@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-structure/ngds-underwriting-submission-response-structure.json",
+  "description": "UnderwritingSubmissionResponse schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Received",
+        "UnderReview",
+        "Approved",
+        "Declined",
+        "RequiresMoreInfo"
+      ]
+    },
+    "submittedAt": {
+      "type": "datetime"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "name": "UnderwritingSubmissionResponse"
+}

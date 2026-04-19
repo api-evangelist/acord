@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-structure/ngds-party-request-structure.json",
+  "description": "PartyRequest schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "partyType": {
+      "type": "string",
+      "enum": [
+        "Insured",
+        "Claimant",
+        "Agent",
+        "Broker",
+        "Carrier"
+      ]
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "organizationName": {
+      "type": "string"
+    },
+    "taxId": {
+      "type": "string"
+    },
+    "address": {
+      "$ref": "#/components/schemas/Address"
+    },
+    "contacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Contact"
+      }
+    }
+  },
+  "required": [
+    "partyType"
+  ],
+  "name": "PartyRequest"
+}

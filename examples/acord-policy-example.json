@@ -1,0 +1,19 @@
+{
+  "policyId": "500123",
+  "policyNumber": "POL-2025-001234",
+  "lineOfBusiness": "PropertyCasualty",
+  "status": "Active",
+  "effectiveDate": "2025-03-15",
+  "expirationDate": "2025-03-15",
+  "premiumAmount": 5000.0,
+  "currency": "USD",
+  "insuredParty": "sample-value",
+  "coverages": [
+    "sample-value"
+  ],
+  "endorsements": [
+    "sample-value"
+  ],
+  "createdAt": "2025-03-15T14:30:00Z",
+  "updatedAt": "2025-03-15T14:30:00Z"
+}

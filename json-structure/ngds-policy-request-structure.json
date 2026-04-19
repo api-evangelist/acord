@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-structure/ngds-policy-request-structure.json",
+  "description": "PolicyRequest schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "lineOfBusiness": {
+      "type": "string",
+      "enum": [
+        "PropertyCasualty",
+        "Life",
+        "Annuity",
+        "Reinsurance"
+      ]
+    },
+    "effectiveDate": {
+      "type": "date"
+    },
+    "expirationDate": {
+      "type": "date"
+    },
+    "premiumAmount": {
+      "type": "double"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "insuredParty": {
+      "$ref": "#/components/schemas/PartyRequest"
+    },
+    "coverages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/CoverageRequest"
+      }
+    }
+  },
+  "required": [
+    "lineOfBusiness",
+    "effectiveDate",
+    "expirationDate",
+    "insuredParty"
+  ],
+  "name": "PolicyRequest"
+}

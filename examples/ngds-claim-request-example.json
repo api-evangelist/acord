@@ -1,0 +1,8 @@
+{
+  "policyId": "500123",
+  "lossDate": "2025-03-15",
+  "lossDescription": "Sample description for this record",
+  "lossLocation": "sample-value",
+  "claimant": "sample-value",
+  "estimatedLossAmount": 5000.0
+}

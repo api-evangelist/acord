@@ -1,0 +1,427 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: ACORD NGDS API
+  description: ACORD Next-Generation Digital Standards REST API providing granular, transaction-centric insurance data exchange for policies, claims, parties, and underwriting.
+  tags:
+    - ACORD
+    - Claims
+    - Insurance
+    - Policy
+    - Standards
+    - Underwriting
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      ACORD_BEARER_TOKEN: ACORD_BEARER_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: acord-ngds
+      baseUri: https://api.insurer-internal.example.com/ngds
+      description: ACORD NGDS REST API for insurance data exchange
+      authentication:
+        type: bearer
+        token: "{{ACORD_BEARER_TOKEN}}"
+      resources:
+        - name: policies
+          path: /policies
+          description: Insurance policy administration and management
+          operations:
+            - name: list-policies
+              method: GET
+              description: List policies with filtering by number, insured party, line of business, and status
+              inputParameters:
+                - name: policyNumber
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by policy number
+                - name: insuredPartyId
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by insured party identifier
+                - name: lineOfBusiness
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by line of business
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by policy status
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+                  description: Page number
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: Results per page
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-policy
+              method: POST
+              description: Submit a new insurance policy for underwriting and issuance
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  lineOfBusiness: "{{tools.lineOfBusiness}}"
+                  effectiveDate: "{{tools.effectiveDate}}"
+                  expirationDate: "{{tools.expirationDate}}"
+                  premiumAmount: "{{tools.premiumAmount}}"
+
+        - name: policy-by-id
+          path: /policies/{policyId}
+          description: Single policy operations
+          operations:
+            - name: get-policy
+              method: GET
+              description: Retrieve a single insurance policy by ID with all coverage details
+              inputParameters:
+                - name: policyId
+                  in: path
+                  type: string
+                  required: true
+                  description: Policy identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-policy
+              method: PATCH
+              description: Apply endorsements or amendments to an existing policy
+              inputParameters:
+                - name: policyId
+                  in: path
+                  type: string
+                  required: true
+                  description: Policy identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  status: "{{tools.status}}"
+                  expirationDate: "{{tools.expirationDate}}"
+
+        - name: claims
+          path: /claims
+          description: Insurance claims inquiry and first notice of loss
+          operations:
+            - name: list-claims
+              method: GET
+              description: List claims with filtering by policy, status, or date range
+              inputParameters:
+                - name: policyId
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by policy identifier
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by claim status
+                - name: lossDateFrom
+                  in: query
+                  type: string
+                  required: false
+                  description: Loss date range start
+                - name: lossDateTo
+                  in: query
+                  type: string
+                  required: false
+                  description: Loss date range end
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: submit-claim
+              method: POST
+              description: Submit a first notice of loss (FNOL) using ACORD NGDS claims model
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  policyId: "{{tools.policyId}}"
+                  lossDate: "{{tools.lossDate}}"
+                  lossDescription: "{{tools.lossDescription}}"
+
+        - name: claim-by-id
+          path: /claims/{claimId}
+          description: Single claim retrieval
+          operations:
+            - name: get-claim
+              method: GET
+              description: Retrieve full claim details including reserves and payment history
+              inputParameters:
+                - name: claimId
+                  in: path
+                  type: string
+                  required: true
+                  description: Claim identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: parties
+          path: /parties
+          description: Insurance party registry (insureds, agents, brokers, carriers)
+          operations:
+            - name: list-parties
+              method: GET
+              description: List parties with optional filtering by type and name
+              inputParameters:
+                - name: partyType
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by party type
+                - name: name
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by name
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-party
+              method: POST
+              description: Register a new party using the ACORD NGDS Party object model
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  partyType: "{{tools.partyType}}"
+                  firstName: "{{tools.firstName}}"
+                  lastName: "{{tools.lastName}}"
+
+        - name: underwriting
+          path: /underwriting/submissions
+          description: Underwriting application submission
+          operations:
+            - name: submit-underwriting
+              method: POST
+              description: Submit an insurance application for underwriting review
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  lineOfBusiness: "{{tools.lineOfBusiness}}"
+                  requestedEffectiveDate: "{{tools.effectiveDate}}"
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: acord-ngds-api
+      resources:
+        - path: /v1/policies
+          name: policies
+          description: Policy administration endpoints
+          operations:
+            - method: GET
+              name: list-policies
+              description: List insurance policies
+              call: "acord-ngds.list-policies"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-policy
+              description: Create a new insurance policy
+              call: "acord-ngds.create-policy"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/policies/{policyId}
+          name: policy-by-id
+          description: Single policy operations
+          operations:
+            - method: GET
+              name: get-policy
+              description: Get policy by ID
+              call: "acord-ngds.get-policy"
+              with:
+                policyId: "rest.policyId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/claims
+          name: claims
+          description: Claims inquiry and submission
+          operations:
+            - method: GET
+              name: list-claims
+              description: List claims
+              call: "acord-ngds.list-claims"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: submit-claim
+              description: Submit a first notice of loss
+              call: "acord-ngds.submit-claim"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/parties
+          name: parties
+          description: Party registry
+          operations:
+            - method: GET
+              name: list-parties
+              description: List parties
+              call: "acord-ngds.list-parties"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: acord-ngds-mcp
+      transport: http
+      tools:
+        - name: list-policies
+          description: List insurance policies with filtering by number, line of business, and status
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "acord-ngds.list-policies"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-policy
+          description: Create a new insurance policy using ACORD NGDS data model
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.create-policy"
+          with:
+            lineOfBusiness: "tools.lineOfBusiness"
+            effectiveDate: "tools.effectiveDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-policy
+          description: Get a specific insurance policy by ID with all coverage details
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "acord-ngds.get-policy"
+          with:
+            policyId: "tools.policyId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-policy
+          description: Apply endorsements or amendments to an existing policy
+          hints:
+            readOnly: false
+            idempotent: true
+          call: "acord-ngds.update-policy"
+          with:
+            policyId: "tools.policyId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-claims
+          description: List insurance claims with filtering by policy, status, and date range
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "acord-ngds.list-claims"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: submit-claim
+          description: Submit a first notice of loss (FNOL) claim using ACORD NGDS
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.submit-claim"
+          with:
+            policyId: "tools.policyId"
+            lossDate: "tools.lossDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-claim
+          description: Get full claim details including reserves and payment history
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "acord-ngds.get-claim"
+          with:
+            claimId: "tools.claimId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-parties
+          description: List insurance parties (insureds, agents, brokers, carriers)
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "acord-ngds.list-parties"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-party
+          description: Register a new party in the ACORD NGDS party registry
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.create-party"
+          with:
+            partyType: "tools.partyType"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: submit-underwriting
+          description: Submit an insurance application for underwriting review
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "acord-ngds.submit-underwriting"
+          with:
+            lineOfBusiness: "tools.lineOfBusiness"
+          outputParameters:
+            - type: object
+              mapping: "$."

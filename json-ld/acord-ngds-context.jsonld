@@ -1,0 +1,253 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "acord": "https://www.acord.org/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Party": "acord:Party",
+    "PolicyList": "acord:PolicyList",
+    "CoverageRequest": "acord:CoverageRequest",
+    "Address": "acord:Address",
+    "ACORD Policy": "acord:ACORD Policy",
+    "UnderwritingSubmissionResponse": "acord:UnderwritingSubmissionResponse",
+    "PolicyRequest": "acord:PolicyRequest",
+    "PolicyUpdate": "acord:PolicyUpdate",
+    "Contact": "acord:Contact",
+    "PartyRequest": "acord:PartyRequest",
+    "ClaimRequest": "acord:ClaimRequest",
+    "Coverage": "acord:Coverage",
+    "PartyList": "acord:PartyList",
+    "ClaimList": "acord:ClaimList",
+    "UnderwritingSubmission": "acord:UnderwritingSubmission",
+    "ACORD Claim": "acord:ACORD Claim",
+    "partyId": {
+      "@id": "acord:partyId",
+      "@type": "xsd:string"
+    },
+    "partyType": {
+      "@id": "acord:partyType",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "acord:firstName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "acord:lastName",
+      "@type": "xsd:string"
+    },
+    "organizationName": {
+      "@id": "acord:organizationName",
+      "@type": "xsd:string"
+    },
+    "taxId": {
+      "@id": "acord:taxId",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "acord:address",
+      "@type": "xsd:string"
+    },
+    "contacts": {
+      "@id": "acord:contacts",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "acord:data",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "pagination": {
+      "@id": "acord:pagination",
+      "@type": "xsd:string"
+    },
+    "coverageType": {
+      "@id": "acord:coverageType",
+      "@type": "xsd:string"
+    },
+    "limit": {
+      "@id": "acord:limit",
+      "@type": "xsd:decimal"
+    },
+    "deductible": {
+      "@id": "acord:deductible",
+      "@type": "xsd:decimal"
+    },
+    "premium": {
+      "@id": "acord:premium",
+      "@type": "xsd:decimal"
+    },
+    "currency": {
+      "@id": "acord:currency",
+      "@type": "xsd:string"
+    },
+    "street1": {
+      "@id": "acord:street1",
+      "@type": "xsd:string"
+    },
+    "street2": {
+      "@id": "acord:street2",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "acord:city",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "acord:state",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "acord:postalCode",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "acord:country",
+      "@type": "xsd:string"
+    },
+    "policyId": {
+      "@id": "acord:policyId",
+      "@type": "xsd:string"
+    },
+    "policyNumber": {
+      "@id": "acord:policyNumber",
+      "@type": "xsd:string"
+    },
+    "lineOfBusiness": {
+      "@id": "acord:lineOfBusiness",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "acord:status",
+      "@type": "xsd:string"
+    },
+    "effectiveDate": {
+      "@id": "acord:effectiveDate",
+      "@type": "xsd:date"
+    },
+    "expirationDate": {
+      "@id": "acord:expirationDate",
+      "@type": "xsd:date"
+    },
+    "premiumAmount": {
+      "@id": "acord:premiumAmount",
+      "@type": "xsd:decimal"
+    },
+    "insuredParty": {
+      "@id": "acord:insuredParty",
+      "@type": "xsd:string"
+    },
+    "coverages": {
+      "@id": "acord:coverages",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "endorsements": {
+      "@id": "acord:endorsements",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "createdAt": "schema:dateCreated",
+    "updatedAt": "schema:dateModified",
+    "submissionId": {
+      "@id": "acord:submissionId",
+      "@type": "xsd:string"
+    },
+    "submittedAt": {
+      "@id": "acord:submittedAt",
+      "@type": "xsd:dateTime"
+    },
+    "notes": {
+      "@id": "acord:notes",
+      "@type": "xsd:string"
+    },
+    "endorsementNumber": {
+      "@id": "acord:endorsementNumber",
+      "@type": "xsd:string"
+    },
+    "description": "schema:description",
+    "contactType": {
+      "@id": "acord:contactType",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "acord:value",
+      "@type": "xsd:string"
+    },
+    "lossDate": {
+      "@id": "acord:lossDate",
+      "@type": "xsd:date"
+    },
+    "lossDescription": {
+      "@id": "acord:lossDescription",
+      "@type": "xsd:string"
+    },
+    "lossLocation": {
+      "@id": "acord:lossLocation",
+      "@type": "xsd:string"
+    },
+    "claimant": {
+      "@id": "acord:claimant",
+      "@type": "xsd:string"
+    },
+    "estimatedLossAmount": {
+      "@id": "acord:estimatedLossAmount",
+      "@type": "xsd:decimal"
+    },
+    "coverageId": {
+      "@id": "acord:coverageId",
+      "@type": "xsd:string"
+    },
+    "applicant": {
+      "@id": "acord:applicant",
+      "@type": "xsd:string"
+    },
+    "requestedEffectiveDate": {
+      "@id": "acord:requestedEffectiveDate",
+      "@type": "xsd:date"
+    },
+    "requestedExpirationDate": {
+      "@id": "acord:requestedExpirationDate",
+      "@type": "xsd:date"
+    },
+    "riskDetails": {
+      "@id": "acord:riskDetails",
+      "@type": "xsd:string"
+    },
+    "claimId": {
+      "@id": "acord:claimId",
+      "@type": "xsd:string"
+    },
+    "claimNumber": {
+      "@id": "acord:claimNumber",
+      "@type": "xsd:string"
+    },
+    "reportedDate": {
+      "@id": "acord:reportedDate",
+      "@type": "xsd:date"
+    },
+    "lossType": {
+      "@id": "acord:lossType",
+      "@type": "xsd:string"
+    },
+    "adjuster": {
+      "@id": "acord:adjuster",
+      "@type": "xsd:string"
+    },
+    "reserveAmount": {
+      "@id": "acord:reserveAmount",
+      "@type": "xsd:decimal"
+    },
+    "paidAmount": {
+      "@id": "acord:paidAmount",
+      "@type": "xsd:decimal"
+    },
+    "payments": {
+      "@id": "acord:payments",
+      "@container": "@set",
+      "@type": "xsd:string"
+    }
+  }
+}

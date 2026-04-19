@@ -1,0 +1,12 @@
+{
+  "partyId": "500123",
+  "partyType": "Insured",
+  "firstName": "Jane Smith",
+  "lastName": "Jane Smith",
+  "organizationName": "Jane Smith",
+  "taxId": "12-3456789",
+  "address": "sample-value",
+  "contacts": [
+    "sample-value"
+  ]
+}

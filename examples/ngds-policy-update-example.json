@@ -1,0 +1,12 @@
+{
+  "status": "Active",
+  "expirationDate": "2025-03-15",
+  "premiumAmount": 5000.0,
+  "endorsements": [
+    {
+      "endorsementNumber": "POL-2025-001234",
+      "description": "Sample description for this record",
+      "effectiveDate": "2025-03-15"
+    }
+  ]
+}

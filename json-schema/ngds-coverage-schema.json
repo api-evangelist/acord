@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/ngds-coverage-schema.json",
+  "title": "Coverage",
+  "description": "Coverage schema from ACORD NGDS API",
+  "type": "object",
+  "properties": {
+    "coverageId": {
+      "type": "string"
+    },
+    "coverageType": {
+      "type": "string"
+    },
+    "limit": {
+      "type": "number"
+    },
+    "deductible": {
+      "type": "number"
+    },
+    "premium": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    }
+  }
+}
