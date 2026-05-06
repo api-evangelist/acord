@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,151 +9,73 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: ACORD
 providerId: acord
-publisherName: ACORD
-serviceCategory: API
+publisherName: ACORD Corporation
+serviceCategory: Insurance Standards / Data Exchange
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - Claims
+  - ACORD
   - Insurance
-  - Policy
   - Standards
-  - Underwriting
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the ACORD API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: FOCUS-aligned FinOps scaffold for ACORD. ACORD invoices member organizations for annual
+  membership and, separately, for ACORD Solutions Group services. There are no per-API metered charges
+  because ACORD publishes standards rather than operating an API.
+sources:
+  - https://www.acord.org/standards-architecture/acord-data-standards
+  - https://www.acord.org/about-acord/membership
+notes: ACORD does not publish public dues; FinOps shape below describes the typical line items a member
+  organization would see — annual membership and optional Solutions Group / certification fees.
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Membership + Optional Services
+  billingFrequency: Annual
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
-    - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
   ServiceName: ACORD
-  ServiceCategory: Developer Tools / API
+  ServiceCategory: Insurance Standards / Data Exchange
   ProviderName: ACORD
-  PublisherName: ACORD
-  InvoiceIssuerName: ACORD
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: ACORD Corporation
+  InvoiceIssuerName: ACORD Corporation
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: annual_membership
+    description: ACORD annual membership dues, scaled to organization type and revenue.
+    unit: year
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - organization_type
+      - revenue_band
+  - name: acord_solutions_group_service
+    description: Project-based billing from ACORD Solutions Group (data services, reinsurance services,
+      onboarding services).
+    unit: project
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
+      - service_line
+  - name: certification_fee
+    description: Per-certification fee (e.g. AL3, ACORD certification programs).
+    unit: certification
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: ACORD XML Standards API
-    baseURL: https://claims.insurer-internal.example.com/acord
-    tags:
-      - ACORD
-      - Claims
-      - Insurance
-      - Policy
-      - Property Casualty
-      - SOAP
-      - XML
-    serviceName: ACORD XML Standards API
-    serviceCategory: API
-  - name: ACORD Next-Generation Digital Standards (NGDS) API
-    baseURL: https://api.insurer-internal.example.com/ngds
-    tags:
-      - ACORD
-      - Digital Standards
-      - Insurance
-      - IoT
-      - JSON
-      - Microservices
-      - REST
-    serviceName: ACORD Next-Generation Digital Standards (NGDS) API
-    serviceCategory: API
-  - name: ACORD Reinsurance & Large Commercial Data Standards API
-    baseURL: https://reinsurance.insurer-internal.example.com/acord
-    tags:
-      - Data Standards
-      - Insurance
-      - Large Commercial
-      - Reinsurance
-      - XML
-    serviceName: ACORD Reinsurance & Large Commercial Data Standards API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - program
+principles:
+  - name: Visibility
+    description: Track ACORD line items from the membership invoice and any ACORD Solutions Group statements
+      of work; there is no usage API.
+  - name: Allocation
+    description: Allocate membership cost to the standards / architecture function; allocate Solutions
+      Group projects to the line of business that sponsored the engagement (claims, policy, reinsurance).
+  - name: Optimization
+    description: Optimization is governance — ensuring the organization adopts ACORD versions consistently
+      so investments in standard implementations don't fragment.
+  - name: Accountability
+    description: Standards / data-architecture leadership owns the membership relationship; project owners
+      own Solutions Group spend.
 maintainers:
-  - name: Kin Lane
-    email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: info@apievangelist.com
