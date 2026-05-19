@@ -1,0 +1,225 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: ACORD Next-Generation Digital Standards (NGDS) API — Policy
+  description: 'ACORD Next-Generation Digital Standards (NGDS) API — Policy. 4 operations. Lead operation: ACORD List Policies.
+    Self-contained Naftiko capability covering one Acord business surface.'
+  tags:
+  - Acord
+  - Policy
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ACORD_API_KEY: ACORD_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ngds-policy
+    baseUri: https://api.insurer-internal.example.com/ngds
+    description: ACORD Next-Generation Digital Standards (NGDS) API — Policy business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: policies
+      path: /policies
+      operations:
+      - name: listpolicies
+        method: GET
+        description: ACORD List Policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policyNumber
+          in: query
+          type: string
+          description: Filter by policy number
+        - name: insuredPartyId
+          in: query
+          type: string
+          description: Filter by insured party identifier
+        - name: lineOfBusiness
+          in: query
+          type: string
+          description: Filter by line of business (e.g., PropertyCasualty, Life, Annuity)
+        - name: status
+          in: query
+          type: string
+          description: Filter by policy status
+        - name: page
+          in: query
+          type: integer
+        - name: pageSize
+          in: query
+          type: integer
+      - name: createpolicy
+        method: POST
+        description: ACORD Create a New Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: policies-policyId
+      path: /policies/{policyId}
+      operations:
+      - name: getpolicy
+        method: GET
+        description: ACORD Get Policy by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policyId
+          in: path
+          type: string
+          required: true
+      - name: updatepolicy
+        method: PATCH
+        description: ACORD Update Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policyId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ACORD_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: ngds-policy-rest
+    port: 8080
+    description: REST adapter for ACORD Next-Generation Digital Standards (NGDS) API — Policy. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/policies
+      name: policies
+      description: REST surface for policies.
+      operations:
+      - method: GET
+        name: listpolicies
+        description: ACORD List Policies
+        call: ngds-policy.listpolicies
+        with:
+          policyNumber: rest.policyNumber
+          insuredPartyId: rest.insuredPartyId
+          lineOfBusiness: rest.lineOfBusiness
+          status: rest.status
+          page: rest.page
+          pageSize: rest.pageSize
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpolicy
+        description: ACORD Create a New Policy
+        call: ngds-policy.createpolicy
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/policies/{policyid}
+      name: policies-policyid
+      description: REST surface for policies-policyId.
+      operations:
+      - method: GET
+        name: getpolicy
+        description: ACORD Get Policy by ID
+        call: ngds-policy.getpolicy
+        with:
+          policyId: rest.policyId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatepolicy
+        description: ACORD Update Policy
+        call: ngds-policy.updatepolicy
+        with:
+          policyId: rest.policyId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ngds-policy-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for ACORD Next-Generation Digital Standards (NGDS) API — Policy. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: acord-list-policies
+      description: ACORD List Policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ngds-policy.listpolicies
+      with:
+        policyNumber: tools.policyNumber
+        insuredPartyId: tools.insuredPartyId
+        lineOfBusiness: tools.lineOfBusiness
+        status: tools.status
+        page: tools.page
+        pageSize: tools.pageSize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: acord-create-new-policy
+      description: ACORD Create a New Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ngds-policy.createpolicy
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: acord-get-policy-id
+      description: ACORD Get Policy by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ngds-policy.getpolicy
+      with:
+        policyId: tools.policyId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: acord-update-policy
+      description: ACORD Update Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: ngds-policy.updatepolicy
+      with:
+        policyId: tools.policyId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

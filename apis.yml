@@ -84,6 +84,8 @@ apis:
     reinsurers, and brokers.
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/acord
 - url: https://www.acord.org
   type: Website
 - url: https://www.acord.org/standards-architecture/acord-data-standards

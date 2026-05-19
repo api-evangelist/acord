@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: ACORD Next-Generation Digital Standards (NGDS) API — Underwriting
+  description: 'ACORD Next-Generation Digital Standards (NGDS) API — Underwriting. 1 operations. Lead operation: ACORD Submit
+    Underwriting Application. Self-contained Naftiko capability covering one Acord business surface.'
+  tags:
+  - Acord
+  - Underwriting
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ACORD_API_KEY: ACORD_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ngds-underwriting
+    baseUri: https://api.insurer-internal.example.com/ngds
+    description: ACORD Next-Generation Digital Standards (NGDS) API — Underwriting business capability. Self-contained, no
+      shared references.
+    resources:
+    - name: underwriting-submissions
+      path: /underwriting/submissions
+      operations:
+      - name: submitunderwritingsubmission
+        method: POST
+        description: ACORD Submit Underwriting Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ACORD_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: ngds-underwriting-rest
+    port: 8080
+    description: REST adapter for ACORD Next-Generation Digital Standards (NGDS) API — Underwriting. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/underwriting/submissions
+      name: underwriting-submissions
+      description: REST surface for underwriting-submissions.
+      operations:
+      - method: POST
+        name: submitunderwritingsubmission
+        description: ACORD Submit Underwriting Application
+        call: ngds-underwriting.submitunderwritingsubmission
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ngds-underwriting-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for ACORD Next-Generation Digital Standards (NGDS) API — Underwriting. One tool per consumed
+      operation, routed inline through this capability's consumes block.
+    tools:
+    - name: acord-submit-underwriting-application
+      description: ACORD Submit Underwriting Application
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ngds-underwriting.submitunderwritingsubmission
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
