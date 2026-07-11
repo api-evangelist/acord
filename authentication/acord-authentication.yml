@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/acord-ngds-openapi.yml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+    scopes: 4
+  sources:
+  - openapi/acord-ngds-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/acord-ngds-openapi.yml
