@@ -1,0 +1,34 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/acord-ngds-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/acord-ngds-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+scopes:
+- scope: read:claims
+  description: Read claim data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/acord-ngds-openapi.yml
+- scope: read:policies
+  description: Read policy data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/acord-ngds-openapi.yml
+- scope: write:claims
+  description: Submit and update claims
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/acord-ngds-openapi.yml
+- scope: write:policies
+  description: Create and modify policies
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/acord-ngds-openapi.yml
