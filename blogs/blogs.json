@@ -1,0 +1,21 @@
+{
+  "repo": "acord",
+  "feeds": [
+    {
+      "source": "https://www.acord.org/ACORD-about/acord-news",
+      "feed_url": "https://www.acord.org/ACORD-about/acord-news",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/vocabulary/acord-vocabulary.yaml",
+      "feed_url": "https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/vocabulary/acord-vocabulary.yaml",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 14
+}
