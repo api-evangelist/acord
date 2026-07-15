@@ -77,6 +77,8 @@ apis:
       large commercial lines. APIs support facultative and treaty reinsurance transactions, placement, and settlement
       between cedants, reinsurers, and brokers.
 common:
+  - type: AgenticAccess
+    url: agentic-access/acord-agentic-access.yml
   - type: DomainSecurity
     url: security/acord-domain-security.yml
   - type: Authentication
