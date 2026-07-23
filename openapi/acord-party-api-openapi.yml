@@ -1,0 +1,244 @@
+openapi: 3.1.0
+info:
+  title: ACORD Next-Generation Digital Standards (NGDS) Claims Party API
+  description: The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.
+  version: 1.0.0
+  contact:
+    name: ACORD Standards
+    url: https://www.acord.org/standards-architecture/acord-data-standards
+  license:
+    name: ACORD License
+    url: https://www.acord.org
+servers:
+- url: https://api.insurer-internal.example.com/ngds
+  description: NGDS REST API endpoint
+security:
+- oauth2: []
+- bearerAuth: []
+tags:
+- name: Party
+  description: Insured party and contact management
+paths:
+  /parties:
+    get:
+      operationId: listParties
+      summary: ACORD List Parties
+      description: Retrieve parties (insureds, claimants, agents, brokers) registered in the system.
+      tags:
+      - Party
+      parameters:
+      - name: partyType
+        in: query
+        schema:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+      - name: name
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of parties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyList'
+              examples:
+                ListParties200Example:
+                  summary: Default listParties 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - {}
+                    pagination:
+                      page: {}
+                      pageSize: {}
+                      totalPages: {}
+                      totalItems: {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createParty
+      summary: ACORD Create a Party
+      description: Register a new party (insured, claimant, or contact) using the ACORD NGDS Party object model.
+      tags:
+      - Party
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyRequest'
+            examples:
+              CreatePartyRequestExample:
+                summary: Default createParty request
+                x-microcks-default: true
+                value:
+                  partyType: Insured
+                  firstName: sample-value
+                  lastName: sample-value
+                  organizationName: sample-value
+                  taxId: sample-value
+                  address:
+                    street1: {}
+                    street2: {}
+                    city: {}
+                    state: {}
+                    postalCode: {}
+                    country: {}
+                  contacts:
+                  - {}
+      responses:
+        '201':
+          description: Party created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Party'
+              examples:
+                CreateParty201Example:
+                  summary: Default createParty 201 response
+                  x-microcks-default: true
+                  value:
+                    partyId: sample-value
+                    partyType: Insured
+                    firstName: sample-value
+                    lastName: sample-value
+                    organizationName: sample-value
+                    taxId: sample-value
+                    address:
+                      street1: {}
+                      street2: {}
+                      city: {}
+                      state: {}
+                      postalCode: {}
+                      country: {}
+                    contacts:
+                    - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Party:
+      type: object
+      properties:
+        partyId:
+          type: string
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum:
+          - Phone
+          - Email
+          - Fax
+        value:
+          type: string
+    PartyRequest:
+      type: object
+      required:
+      - partyType
+      properties:
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    PartyList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+          scopes:
+            read:policies: Read policy data
+            write:policies: Create and modify policies
+            read:claims: Read claim data
+            write:claims: Submit and update claims
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

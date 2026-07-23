@@ -1,0 +1,428 @@
+openapi: 3.1.0
+info:
+  title: ACORD Next-Generation Digital Standards (NGDS) Claims API
+  description: The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.
+  version: 1.0.0
+  contact:
+    name: ACORD Standards
+    url: https://www.acord.org/standards-architecture/acord-data-standards
+  license:
+    name: ACORD License
+    url: https://www.acord.org
+servers:
+- url: https://api.insurer-internal.example.com/ngds
+  description: NGDS REST API endpoint
+security:
+- oauth2: []
+- bearerAuth: []
+tags:
+- name: Claims
+  description: Claims inquiry, submission, and management
+paths:
+  /claims:
+    get:
+      operationId: listClaims
+      summary: ACORD List Claims
+      description: Retrieve a list of claims with optional filtering by policy, status, or date range.
+      tags:
+      - Claims
+      parameters:
+      - name: policyId
+        in: query
+        schema:
+          type: string
+      - name: claimNumber
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - Open
+          - Closed
+          - Pending
+          - Denied
+          - Paid
+      - name: lossDateFrom
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: lossDateTo
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: List of claims
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaimList'
+              examples:
+                ListClaims200Example:
+                  summary: Default listClaims 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - {}
+                    pagination:
+                      page: {}
+                      pageSize: {}
+                      totalPages: {}
+                      totalItems: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: submitClaim
+      summary: ACORD Submit a New Claim
+      description: Submit a first notice of loss (FNOL) using ACORD NGDS claims transaction model.
+      tags:
+      - Claims
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimRequest'
+            examples:
+              SubmitClaimRequestExample:
+                summary: Default submitClaim request
+                x-microcks-default: true
+                value:
+                  policyId: sample-value
+                  lossDate: '2025-03-15'
+                  lossDescription: sample-value
+                  lossLocation:
+                    street1: {}
+                    street2: {}
+                    city: {}
+                    state: {}
+                    postalCode: {}
+                    country: {}
+                  claimant:
+                    partyType: {}
+                    firstName: {}
+                    lastName: {}
+                    organizationName: {}
+                    taxId: {}
+                    address: {}
+                    contacts: {}
+                  estimatedLossAmount: 5000.0
+      responses:
+        '201':
+          description: Claim submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+              examples:
+                SubmitClaim201Example:
+                  summary: Default submitClaim 201 response
+                  x-microcks-default: true
+                  value:
+                    claimId: sample-value
+                    claimNumber: sample-value
+                    policyId: sample-value
+                    policyNumber: sample-value
+                    status: Open
+                    lossDate: '2025-03-15'
+                    reportedDate: '2025-03-15'
+                    lossDescription: sample-value
+                    lossLocation:
+                      street1: {}
+                      street2: {}
+                      city: {}
+                      state: {}
+                      postalCode: {}
+                      country: {}
+                    claimant:
+                      partyId: {}
+                      partyType: {}
+                      firstName: {}
+                      lastName: {}
+                      organizationName: {}
+                      taxId: {}
+                      address: {}
+                      contacts: {}
+                    reserveAmount: 5000.0
+                    paidAmount: 5000.0
+                    currency: sample-value
+                    createdAt: '2025-03-15T14:30:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /claims/{claimId}:
+    get:
+      operationId: getClaim
+      summary: ACORD Get Claim by ID
+      description: Retrieve full claim details including loss information, reserves, and payment history.
+      tags:
+      - Claims
+      parameters:
+      - name: claimId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Claim details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Claim'
+              examples:
+                GetClaim200Example:
+                  summary: Default getClaim 200 response
+                  x-microcks-default: true
+                  value:
+                    claimId: sample-value
+                    claimNumber: sample-value
+                    policyId: sample-value
+                    policyNumber: sample-value
+                    status: Open
+                    lossDate: '2025-03-15'
+                    reportedDate: '2025-03-15'
+                    lossDescription: sample-value
+                    lossLocation:
+                      street1: {}
+                      street2: {}
+                      city: {}
+                      state: {}
+                      postalCode: {}
+                      country: {}
+                    claimant:
+                      partyId: {}
+                      partyType: {}
+                      firstName: {}
+                      lastName: {}
+                      organizationName: {}
+                      taxId: {}
+                      address: {}
+                      contacts: {}
+                    reserveAmount: 5000.0
+                    paidAmount: 5000.0
+                    currency: sample-value
+                    createdAt: '2025-03-15T14:30:00Z'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Party:
+      type: object
+      properties:
+        partyId:
+          type: string
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    ClaimRequest:
+      type: object
+      required:
+      - policyId
+      - lossDate
+      - lossDescription
+      properties:
+        policyId:
+          type: string
+        lossDate:
+          type: string
+          format: date
+        lossDescription:
+          type: string
+        lossLocation:
+          $ref: '#/components/schemas/Address'
+        claimant:
+          $ref: '#/components/schemas/PartyRequest'
+        estimatedLossAmount:
+          type: number
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum:
+          - Phone
+          - Email
+          - Fax
+        value:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+    ClaimList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Claim'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    PartyRequest:
+      type: object
+      required:
+      - partyType
+      properties:
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    Claim:
+      type: object
+      properties:
+        claimId:
+          type: string
+        claimNumber:
+          type: string
+        policyId:
+          type: string
+        policyNumber:
+          type: string
+        status:
+          type: string
+          enum:
+          - Open
+          - Closed
+          - Pending
+          - Denied
+          - Paid
+        lossDate:
+          type: string
+          format: date
+        reportedDate:
+          type: string
+          format: date
+        lossDescription:
+          type: string
+        lossLocation:
+          $ref: '#/components/schemas/Address'
+        claimant:
+          $ref: '#/components/schemas/Party'
+        reserveAmount:
+          type: number
+        paidAmount:
+          type: number
+        currency:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+          scopes:
+            read:policies: Read policy data
+            write:policies: Create and modify policies
+            read:claims: Read claim data
+            write:claims: Submit and update claims
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

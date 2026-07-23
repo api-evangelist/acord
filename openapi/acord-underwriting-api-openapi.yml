@@ -1,0 +1,179 @@
+openapi: 3.1.0
+info:
+  title: ACORD Next-Generation Digital Standards (NGDS) Claims Underwriting API
+  description: The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.
+  version: 1.0.0
+  contact:
+    name: ACORD Standards
+    url: https://www.acord.org/standards-architecture/acord-data-standards
+  license:
+    name: ACORD License
+    url: https://www.acord.org
+servers:
+- url: https://api.insurer-internal.example.com/ngds
+  description: NGDS REST API endpoint
+security:
+- oauth2: []
+- bearerAuth: []
+tags:
+- name: Underwriting
+  description: Underwriting and risk assessment
+paths:
+  /underwriting/submissions:
+    post:
+      operationId: submitUnderwritingSubmission
+      summary: ACORD Submit Underwriting Application
+      description: Submit an insurance application for underwriting review using ACORD NGDS underwriting transaction.
+      tags:
+      - Underwriting
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnderwritingSubmission'
+            examples:
+              SubmitUnderwritingSubmissionRequestExample:
+                summary: Default submitUnderwritingSubmission request
+                x-microcks-default: true
+                value:
+                  lineOfBusiness: sample-value
+                  applicant:
+                    partyType: {}
+                    firstName: {}
+                    lastName: {}
+                    organizationName: {}
+                    taxId: {}
+                    address: {}
+                    contacts: {}
+                  requestedEffectiveDate: '2025-03-15'
+                  requestedExpirationDate: '2025-03-15'
+                  riskDetails: {}
+      responses:
+        '201':
+          description: Submission created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnderwritingSubmissionResponse'
+              examples:
+                SubmitUnderwritingSubmission201Example:
+                  summary: Default submitUnderwritingSubmission 201 response
+                  x-microcks-default: true
+                  value:
+                    submissionId: sample-value
+                    status: Received
+                    submittedAt: '2025-03-15T14:30:00Z'
+                    notes: sample-value
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    UnderwritingSubmissionResponse:
+      type: object
+      properties:
+        submissionId:
+          type: string
+        status:
+          type: string
+          enum:
+          - Received
+          - UnderReview
+          - Approved
+          - Declined
+          - RequiresMoreInfo
+        submittedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum:
+          - Phone
+          - Email
+          - Fax
+        value:
+          type: string
+    PartyRequest:
+      type: object
+      required:
+      - partyType
+      properties:
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    UnderwritingSubmission:
+      type: object
+      required:
+      - lineOfBusiness
+      - applicant
+      - requestedEffectiveDate
+      properties:
+        lineOfBusiness:
+          type: string
+        applicant:
+          $ref: '#/components/schemas/PartyRequest'
+        requestedEffectiveDate:
+          type: string
+          format: date
+        requestedExpirationDate:
+          type: string
+          format: date
+        riskDetails:
+          type: object
+          additionalProperties: true
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+          scopes:
+            read:policies: Read policy data
+            write:policies: Create and modify policies
+            read:claims: Read claim data
+            write:claims: Submit and update claims
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
