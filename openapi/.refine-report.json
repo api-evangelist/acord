@@ -1,0 +1,20 @@
+{
+  "provider": "acord",
+  "sources": [
+    "acord-claims-api-openapi.yml",
+    "acord-party-api-openapi.yml",
+    "acord-policy-api-openapi.yml",
+    "acord-underwriting-api-openapi.yml"
+  ],
+  "outputs": [
+    "acord-claims-api-openapi.yml",
+    "acord-party-api-openapi.yml",
+    "acord-policy-api-openapi.yml",
+    "acord-underwriting-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
