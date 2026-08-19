@@ -1,0 +1,246 @@
+{
+  "item": [
+    {
+      "id": "f892791b-fd2d-4766-b636-9ad0c08837df",
+      "name": "Party",
+      "description": {
+        "content": "Insured party and contact management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "72bf4c8b-c18d-4f00-b6ec-ef87f50187e4",
+          "name": "ACORD List Parties",
+          "request": {
+            "name": "ACORD List Parties",
+            "description": {
+              "content": "Retrieve parties (insureds, claimants, agents, brokers) registered in the system.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "parties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "partyType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b84793bd-7d57-4fac-99e4-5794748a6846",
+              "name": "List of parties",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "parties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partyType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {}\n  ],\n  \"pagination\": {\n    \"page\": {},\n    \"pageSize\": {},\n    \"totalPages\": {},\n    \"totalItems\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9fda8bc-ba62-40d8-b438-b404b17d5800",
+          "name": "ACORD Create a Party",
+          "request": {
+            "name": "ACORD Create a Party",
+            "description": {
+              "content": "Register a new party (insured, claimant, or contact) using the ACORD NGDS Party object model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "parties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"partyType\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"organizationName\": \"<string>\",\n  \"taxId\": \"<string>\",\n  \"address\": {\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"country\": \"US\"\n  },\n  \"contacts\": [\n    {\n      \"contactType\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"contactType\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f668314d-e662-46e2-a2a6-17ad53de31da",
+              "name": "Party created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "parties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"partyType\": \"Insured\",\n  \"firstName\": \"sample-value\",\n  \"lastName\": \"sample-value\",\n  \"organizationName\": \"sample-value\",\n  \"taxId\": \"sample-value\",\n  \"address\": {\n    \"street1\": {},\n    \"street2\": {},\n    \"city\": {},\n    \"state\": {},\n    \"postalCode\": {},\n    \"country\": {}\n  },\n  \"contacts\": [\n    {}\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"partyId\": \"sample-value\",\n  \"partyType\": \"Insured\",\n  \"firstName\": \"sample-value\",\n  \"lastName\": \"sample-value\",\n  \"organizationName\": \"sample-value\",\n  \"taxId\": \"sample-value\",\n  \"address\": {\n    \"street1\": {},\n    \"street2\": {},\n    \"city\": {},\n    \"state\": {},\n    \"postalCode\": {},\n    \"country\": {}\n  },\n  \"contacts\": [\n    {}\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.insurer-internal.example.com/ngds",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "read:policies write:policies read:claims write:claims"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.insurer-internal.example.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "44a4d389-8dd2-4e7a-b3a7-ca4269232c81",
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims Party API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.\n\nContact Support:\n Name: ACORD Standards",
+      "type": "text/plain"
+    }
+  }
+}

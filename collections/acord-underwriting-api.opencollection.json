@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims Underwriting API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://auth.insurer-internal.example.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Underwriting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ACORD Submit Underwriting Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.insurer-internal.example.com/ngds/underwriting/submissions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an insurance application for underwriting review using ACORD NGDS underwriting transaction."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

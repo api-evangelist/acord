@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims Party API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://auth.insurer-internal.example.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Party",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ACORD List Parties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.insurer-internal.example.com/ngds/parties",
+            "params": [
+              {
+                "name": "partyType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve parties (insureds, claimants, agents, brokers) registered in the system."
+        },
+        {
+          "info": {
+            "name": "ACORD Create a Party",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.insurer-internal.example.com/ngds/parties",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new party (insured, claimant, or contact) using the ACORD NGDS Party object model."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

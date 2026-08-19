@@ -1,0 +1,536 @@
+{
+  "item": [
+    {
+      "id": "ef8e59a3-3a16-4a4b-acc7-285ad5b0aa26",
+      "name": "Claims",
+      "description": {
+        "content": "Claims inquiry, submission, and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d6c86d90-081e-40e9-b39e-a9499a8d6a93",
+          "name": "ACORD List Claims",
+          "request": {
+            "name": "ACORD List Claims",
+            "description": {
+              "content": "Retrieve a list of claims with optional filtering by policy, status, or date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "claims"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "policyId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "claimNumber",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "lossDateFrom",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "lossDateTo",
+                  "value": "<date>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5bc8682-de68-40ef-98fa-e8221986e301",
+              "name": "List of claims",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policyId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "claimNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lossDateFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "lossDateTo",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {}\n  ],\n  \"pagination\": {\n    \"page\": {},\n    \"pageSize\": {},\n    \"totalPages\": {},\n    \"totalItems\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8947176-5416-444e-88b3-49b16b757dac",
+              "name": "Unauthorized - missing or invalid authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policyId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "claimNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lossDateFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "lossDateTo",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7098cc4d-1866-4041-a3c3-c5df51116ed3",
+          "name": "ACORD Submit a New Claim",
+          "request": {
+            "name": "ACORD Submit a New Claim",
+            "description": {
+              "content": "Submit a first notice of loss (FNOL) using ACORD NGDS claims transaction model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "claims"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policyId\": \"<string>\",\n  \"lossDate\": \"<date>\",\n  \"lossDescription\": \"<string>\",\n  \"lossLocation\": {\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"country\": \"US\"\n  },\n  \"claimant\": {\n    \"partyType\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"organizationName\": \"<string>\",\n    \"taxId\": \"<string>\",\n    \"address\": {\n      \"street1\": \"<string>\",\n      \"street2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postalCode\": \"<string>\",\n      \"country\": \"US\"\n    },\n    \"contacts\": [\n      {\n        \"contactType\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"contactType\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  \"estimatedLossAmount\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab9e1495-fb65-4084-835f-b7e658e1d85d",
+              "name": "Claim submitted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyId\": \"sample-value\",\n  \"lossDate\": \"2025-03-15\",\n  \"lossDescription\": \"sample-value\",\n  \"lossLocation\": {\n    \"street1\": {},\n    \"street2\": {},\n    \"city\": {},\n    \"state\": {},\n    \"postalCode\": {},\n    \"country\": {}\n  },\n  \"claimant\": {\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"estimatedLossAmount\": 5000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"claimId\": \"sample-value\",\n  \"claimNumber\": \"sample-value\",\n  \"policyId\": \"sample-value\",\n  \"policyNumber\": \"sample-value\",\n  \"status\": \"Open\",\n  \"lossDate\": \"2025-03-15\",\n  \"reportedDate\": \"2025-03-15\",\n  \"lossDescription\": \"sample-value\",\n  \"lossLocation\": {\n    \"street1\": {},\n    \"street2\": {},\n    \"city\": {},\n    \"state\": {},\n    \"postalCode\": {},\n    \"country\": {}\n  },\n  \"claimant\": {\n    \"partyId\": {},\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"reserveAmount\": 5000,\n  \"paidAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"createdAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "319da9cd-7c22-41aa-9a3e-1fe868c8aea6",
+              "name": "Bad request - invalid input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyId\": \"sample-value\",\n  \"lossDate\": \"2025-03-15\",\n  \"lossDescription\": \"sample-value\",\n  \"lossLocation\": {\n    \"street1\": {},\n    \"street2\": {},\n    \"city\": {},\n    \"state\": {},\n    \"postalCode\": {},\n    \"country\": {}\n  },\n  \"claimant\": {\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"estimatedLossAmount\": 5000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35651e60-f2ab-41a2-9bdb-1a9649d7c910",
+          "name": "ACORD Get Claim by ID",
+          "request": {
+            "name": "ACORD Get Claim by ID",
+            "description": {
+              "content": "Retrieve full claim details including loss information, reserves, and payment history.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "claims",
+                ":claimId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "claimId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3dc8a267-1d6c-404b-aa60-1a11555d3967",
+              "name": "Claim details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":claimId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "claimId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"claimId\": \"sample-value\",\n  \"claimNumber\": \"sample-value\",\n  \"policyId\": \"sample-value\",\n  \"policyNumber\": \"sample-value\",\n  \"status\": \"Open\",\n  \"lossDate\": \"2025-03-15\",\n  \"reportedDate\": \"2025-03-15\",\n  \"lossDescription\": \"sample-value\",\n  \"lossLocation\": {\n    \"street1\": {},\n    \"street2\": {},\n    \"city\": {},\n    \"state\": {},\n    \"postalCode\": {},\n    \"country\": {}\n  },\n  \"claimant\": {\n    \"partyId\": {},\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"reserveAmount\": 5000,\n  \"paidAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"createdAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cfb6b0d-9389-4f95-919a-4c923ac8986b",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "claims",
+                    ":claimId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "claimId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.insurer-internal.example.com/ngds",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "read:policies write:policies read:claims write:claims"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.insurer-internal.example.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "696491e5-07e4-47ed-849b-36cef1c6b6a4",
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.\n\nContact Support:\n Name: ACORD Standards",
+      "type": "text/plain"
+    }
+  }
+}

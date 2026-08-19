@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims Policy API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://auth.insurer-internal.example.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ACORD List Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.insurer-internal.example.com/ngds/policies",
+            "params": [
+              {
+                "name": "policyNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter by policy number"
+              },
+              {
+                "name": "insuredPartyId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by insured party identifier"
+              },
+              {
+                "name": "lineOfBusiness",
+                "value": "",
+                "type": "query",
+                "description": "Filter by line of business (e.g., PropertyCasualty, Life, Annuity)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by policy status"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of insurance policies matching the given filters."
+        },
+        {
+          "info": {
+            "name": "ACORD Create a New Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.insurer-internal.example.com/ngds/policies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new insurance policy for underwriting and issuance using ACORD NGDS data model."
+        },
+        {
+          "info": {
+            "name": "ACORD Get Policy by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.insurer-internal.example.com/ngds/policies/:policyId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a single insurance policy and all associated coverage details by policy identifier."
+        },
+        {
+          "info": {
+            "name": "ACORD Update Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.insurer-internal.example.com/ngds/policies/:policyId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Apply endorsements or amendments to an existing policy using ACORD NGDS change transactions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

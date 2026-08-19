@@ -1,0 +1,150 @@
+{
+  "item": [
+    {
+      "id": "faad7cc1-f356-4951-85e9-5a2566498e7f",
+      "name": "Underwriting",
+      "description": {
+        "content": "Underwriting and risk assessment",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "20371dbd-aae5-43eb-afac-d9d361898a42",
+          "name": "ACORD Submit Underwriting Application",
+          "request": {
+            "name": "ACORD Submit Underwriting Application",
+            "description": {
+              "content": "Submit an insurance application for underwriting review using ACORD NGDS underwriting transaction.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "underwriting",
+                "submissions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"<string>\",\n  \"applicant\": {\n    \"partyType\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"organizationName\": \"<string>\",\n    \"taxId\": \"<string>\",\n    \"address\": {\n      \"street1\": \"<string>\",\n      \"street2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postalCode\": \"<string>\",\n      \"country\": \"US\"\n    },\n    \"contacts\": [\n      {\n        \"contactType\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"contactType\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  \"requestedEffectiveDate\": \"<date>\",\n  \"requestedExpirationDate\": \"<date>\",\n  \"riskDetails\": {\n    \"key_0\": true,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8e1dc99b-0be8-46ce-b27d-45107ca4ae7c",
+              "name": "Submission created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "underwriting",
+                    "submissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lineOfBusiness\": \"sample-value\",\n  \"applicant\": {\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"requestedEffectiveDate\": \"2025-03-15\",\n  \"requestedExpirationDate\": \"2025-03-15\",\n  \"riskDetails\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"submissionId\": \"sample-value\",\n  \"status\": \"Received\",\n  \"submittedAt\": \"2025-03-15T14:30:00Z\",\n  \"notes\": \"sample-value\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.insurer-internal.example.com/ngds",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "read:policies write:policies read:claims write:claims"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.insurer-internal.example.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4512fbde-aa8c-4ce4-902e-26bc34721da9",
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims Underwriting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.\n\nContact Support:\n Name: ACORD Standards",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://auth.insurer-internal.example.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Claims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ACORD List Claims",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.insurer-internal.example.com/ngds/claims",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "claimNumber",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lossDateFrom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lossDateTo",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of claims with optional filtering by policy, status, or date range."
+        },
+        {
+          "info": {
+            "name": "ACORD Submit a New Claim",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.insurer-internal.example.com/ngds/claims",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a first notice of loss (FNOL) using ACORD NGDS claims transaction model."
+        },
+        {
+          "info": {
+            "name": "ACORD Get Claim by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.insurer-internal.example.com/ngds/claims/:claimId",
+            "params": [
+              {
+                "name": "claimId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve full claim details including loss information, reserves, and payment history."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

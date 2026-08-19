@@ -1,0 +1,849 @@
+{
+  "item": [
+    {
+      "id": "65008328-f09e-43fd-97de-f7fb33b74bcf",
+      "name": "Policy",
+      "description": {
+        "content": "Policy administration and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5f19a5f3-4532-43ed-b055-4aa7df91062c",
+          "name": "ACORD List Policies",
+          "request": {
+            "name": "ACORD List Policies",
+            "description": {
+              "content": "Retrieve a paginated list of insurance policies matching the given filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "policyNumber",
+                  "value": "<string>",
+                  "description": "Filter by policy number"
+                },
+                {
+                  "disabled": false,
+                  "key": "insuredPartyId",
+                  "value": "<string>",
+                  "description": "Filter by insured party identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "lineOfBusiness",
+                  "value": "<string>",
+                  "description": "Filter by line of business (e.g., PropertyCasualty, Life, Annuity)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by policy status"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "25"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4dd5f5a8-5f91-4ce7-94a6-61215592b708",
+              "name": "Paginated list of policies",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policyNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "insuredPartyId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lineOfBusiness",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {}\n  ],\n  \"pagination\": {\n    \"page\": {},\n    \"pageSize\": {},\n    \"totalPages\": {},\n    \"totalItems\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cda9d65-1681-4ccd-9c8d-b1475013d1cc",
+              "name": "Unauthorized - missing or invalid authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policyNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "insuredPartyId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lineOfBusiness",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20a7f3fe-5f77-47dc-8472-562dd199d6ba",
+              "name": "Forbidden - insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policyNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "insuredPartyId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "lineOfBusiness",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd781d24-3636-4dbc-8af4-04e2162bcf32",
+          "name": "ACORD Create a New Policy",
+          "request": {
+            "name": "ACORD Create a New Policy",
+            "description": {
+              "content": "Submit a new insurance policy for underwriting and issuance using ACORD NGDS data model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"<string>\",\n  \"effectiveDate\": \"<date>\",\n  \"expirationDate\": \"<date>\",\n  \"insuredParty\": {\n    \"partyType\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"organizationName\": \"<string>\",\n    \"taxId\": \"<string>\",\n    \"address\": {\n      \"street1\": \"<string>\",\n      \"street2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postalCode\": \"<string>\",\n      \"country\": \"US\"\n    },\n    \"contacts\": [\n      {\n        \"contactType\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"contactType\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  \"premiumAmount\": \"<double>\",\n  \"currency\": \"USD\",\n  \"coverages\": [\n    {\n      \"coverageType\": \"<string>\",\n      \"limit\": \"<number>\",\n      \"deductible\": \"<number>\",\n      \"premium\": \"<number>\",\n      \"currency\": \"USD\"\n    },\n    {\n      \"coverageType\": \"<string>\",\n      \"limit\": \"<number>\",\n      \"deductible\": \"<number>\",\n      \"premium\": \"<number>\",\n      \"currency\": \"USD\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a8c98c49-426e-4918-b194-cb92db5f2490",
+              "name": "Policy created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lineOfBusiness\": \"PropertyCasualty\",\n  \"effectiveDate\": \"2025-03-15\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"insuredParty\": {\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"coverages\": [\n    {}\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policyId\": \"500123\",\n  \"policyNumber\": \"POL-2025-001234\",\n  \"lineOfBusiness\": \"PropertyCasualty\",\n  \"status\": \"Active\",\n  \"effectiveDate\": \"2025-03-15\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"insuredParty\": {\n    \"partyId\": {},\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"coverages\": [\n    {}\n  ],\n  \"createdAt\": \"2025-03-15T14:30:00Z\",\n  \"updatedAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "872d4932-e2f7-423c-9827-b32788115694",
+              "name": "Bad request - invalid input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lineOfBusiness\": \"PropertyCasualty\",\n  \"effectiveDate\": \"2025-03-15\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"insuredParty\": {\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"coverages\": [\n    {}\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "200ceb7e-5520-4ba7-aa21-ceac2af15ee6",
+              "name": "Unauthorized - missing or invalid authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lineOfBusiness\": \"PropertyCasualty\",\n  \"effectiveDate\": \"2025-03-15\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"insuredParty\": {\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"coverages\": [\n    {}\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "affd4a82-869d-4317-8752-aa0a5159f076",
+          "name": "ACORD Get Policy by ID",
+          "request": {
+            "name": "ACORD Get Policy by ID",
+            "description": {
+              "content": "Retrieve a single insurance policy and all associated coverage details by policy identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies",
+                ":policyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policyId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc3e7c8d-6bd5-4007-8a87-0d20aaffc67d",
+              "name": "Policy details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policyId\": \"500123\",\n  \"policyNumber\": \"POL-2025-001234\",\n  \"lineOfBusiness\": \"PropertyCasualty\",\n  \"status\": \"Active\",\n  \"effectiveDate\": \"2025-03-15\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"insuredParty\": {\n    \"partyId\": {},\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"coverages\": [\n    {}\n  ],\n  \"createdAt\": \"2025-03-15T14:30:00Z\",\n  \"updatedAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64c564e0-66a4-4715-8c77-f6541f6fb6ae",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f32c6d53-8fba-4dd9-bb5b-4476ba54f75f",
+          "name": "ACORD Update Policy",
+          "request": {
+            "name": "ACORD Update Policy",
+            "description": {
+              "content": "Apply endorsements or amendments to an existing policy using ACORD NGDS change transactions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies",
+                ":policyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policyId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\",\n  \"expirationDate\": \"<date>\",\n  \"premiumAmount\": \"<number>\",\n  \"endorsements\": [\n    {\n      \"endorsementNumber\": \"<string>\",\n      \"description\": \"<string>\",\n      \"effectiveDate\": \"<date>\"\n    },\n    {\n      \"endorsementNumber\": \"<string>\",\n      \"description\": \"<string>\",\n      \"effectiveDate\": \"<date>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc67fb11-bb5e-4bf0-b8e3-ff5130f97cba",
+              "name": "Policy updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"Active\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"endorsements\": [\n    {\n      \"endorsementNumber\": {},\n      \"description\": {},\n      \"effectiveDate\": {}\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policyId\": \"500123\",\n  \"policyNumber\": \"POL-2025-001234\",\n  \"lineOfBusiness\": \"PropertyCasualty\",\n  \"status\": \"Active\",\n  \"effectiveDate\": \"2025-03-15\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"currency\": \"sample-value\",\n  \"insuredParty\": {\n    \"partyId\": {},\n    \"partyType\": {},\n    \"firstName\": {},\n    \"lastName\": {},\n    \"organizationName\": {},\n    \"taxId\": {},\n    \"address\": {},\n    \"contacts\": {}\n  },\n  \"coverages\": [\n    {}\n  ],\n  \"createdAt\": \"2025-03-15T14:30:00Z\",\n  \"updatedAt\": \"2025-03-15T14:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d3a374f-06b1-4dfd-823b-0dadd65174be",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"Active\",\n  \"expirationDate\": \"2025-03-15\",\n  \"premiumAmount\": 5000,\n  \"endorsements\": [\n    {\n      \"endorsementNumber\": {},\n      \"description\": {},\n      \"effectiveDate\": {}\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.insurer-internal.example.com/ngds",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "read:policies write:policies read:claims write:claims"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.insurer-internal.example.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4ac92f48-855d-416f-8b63-e17fd7057949",
+    "name": "ACORD Next-Generation Digital Standards (NGDS) Claims Policy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.\n\nContact Support:\n Name: ACORD Standards",
+      "type": "text/plain"
+    }
+  }
+}
