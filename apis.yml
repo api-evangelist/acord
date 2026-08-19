@@ -262,7 +262,7 @@ description: >-
   and digital tools that enable insurers, brokers, and software providers to exchange information.
 name: ACORD
 type: Index
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 tags:
   - Claims
   - Insurance
