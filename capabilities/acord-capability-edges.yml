@@ -1,0 +1,44 @@
+slug: acord
+provider: ACORD
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Insurance
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Policy
+  spec_file: acord-policy-api-openapi.yml
+  capability_id: BC-2140
+  capability_id_l1: BC-2140
+  capability_name: Policy Administration Management
+  confidence: 0.85
+  evidence: POST /policies  createPolicy  ACORD Create a New Policy / PATCH /policies/{policyId}  updatePolicy  ACORD
+    Update Policy
+  reason: Create, retrieve and update insurance policies with Policy and Coverage schemas — administration
+    of in-force insurance contracts. Spans issuance and change, so no single L2 is named by the evidence.
+- tag: Claims
+  spec_file: acord-claims-api-openapi.yml
+  capability_id: BC-2160.10
+  capability_id_l1: BC-2160
+  capability_name: First Notice of Loss Management
+  confidence: 0.8
+  evidence: POST /claims  submitClaim  ACORD Submit a New Claim
+  reason: Claim submission, listing and retrieval with Claim/ClaimRequest schemas in an insurance data-standard
+    API — plainly insurance claims management; new-claim submission maps to notice-of-loss intake and
+    registration.
+- tag: Underwriting
+  spec_file: acord-underwriting-api-openapi.yml
+  capability_id: BC-2130.10
+  capability_id_l1: BC-2130
+  capability_name: Underwriting Risk Intake
+  confidence: 0.7
+  evidence: POST /underwriting/submissions  submitUnderwritingSubmission  ACORD Submit Underwriting Application
+  reason: Submission of an underwriting application with UnderwritingSubmission/Response schemas is underwriting
+    submission intake; the single operation supports risk intake specifically rather than decisioning.
