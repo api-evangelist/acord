@@ -13,7 +13,6 @@ apis:
   - XML
   image: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/image.png
   humanURL: https://www.acord.org/standards-architecture/acord-data-standards
-  baseURL: https://claims.insurer-internal.example.com/acord
   properties:
   - url: https://www.acord.org/standards-architecture/acord-data-standards
     type: Documentation
@@ -34,7 +33,6 @@ apis:
   image: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/image.png
   humanURL: >-
     https://www.acord.org/standards-architecture/acord-data-standards/Global_Reinsurance_Data_Standards
-  baseURL: https://reinsurance.insurer-internal.example.com/acord
   properties:
   - url: >-
       https://www.acord.org/standards-architecture/acord-data-standards/Global_Reinsurance_Data_Standards
@@ -47,7 +45,6 @@ apis:
   name: ACORD Claims API
   description: Claims inquiry, submission, and management
   humanURL: https://www.acord.org/standards-architecture/acord-data-standards
-  baseURL: https://claims.insurer-internal.example.com/acord
   tags:
   - Claims
   properties:
@@ -78,7 +75,6 @@ apis:
   name: ACORD Party API
   description: Insured party and contact management
   humanURL: https://www.acord.org/standards-architecture/acord-data-standards
-  baseURL: https://claims.insurer-internal.example.com/acord
   tags:
   - Party
   properties:
@@ -109,7 +105,6 @@ apis:
   name: ACORD Policy API
   description: Policy administration and management
   humanURL: https://www.acord.org/standards-architecture/acord-data-standards
-  baseURL: https://claims.insurer-internal.example.com/acord
   tags:
   - Policy
   properties:
@@ -140,7 +135,6 @@ apis:
   name: ACORD Underwriting API
   description: Underwriting and risk assessment
   humanURL: https://www.acord.org/standards-architecture/acord-data-standards
-  baseURL: https://claims.insurer-internal.example.com/acord
   tags:
   - Underwriting
   properties:
@@ -193,20 +187,59 @@ common:
     type: Documentation
   - url: https://www.acord.org/standards-architecture/get-involved/standards-project-advisory-groups
     type: Support
-  - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/openapi/acord-ngds-openapi.yml
-    type: OpenAPI
   - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/acord-policy-schema.json
     type: JSONSchema
   - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/acord-claim-schema.json
     type: JSONSchema
   - url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-ld/acord-context.jsonld
     type: JSONLDContext
-  - type: GitHubOrganization
-    url: https://github.com/api-evangelist/acord
   - type: SpectralRules
     url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/rules/acord-spectral-rules.yml
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/vocabulary/acord-vocabulary.yaml
+  - type: LLMsTxt
+    url: llms/acord-llms.txt
+    name: ACORD llms.txt (API Evangelist generated; ACORD serves no /llms.txt)
+  - type: Conformance
+    url: conformance/acord-conformance.yml
+    name: ACORD standards + cross-cutting conformance
+  - type: Compliance
+    url: conformance/acord-conformance.yml
+    name: SOC 2 (AICPA badge published by ACORD Solutions Group)
+  - type: Lifecycle
+    url: lifecycle/acord-lifecycle.yml
+    name: ACORD standards release lifecycle
+  - type: Deprecation
+    url: lifecycle/acord-lifecycle.yml
+    name: NGDS Master Deprecation List + Standards Enhancement process
+  - type: StatusPage
+    url: https://status.acordsolutions.com/
+    name: ACORD Solutions Group status (Atlassian Statuspage, public JSON API)
+  - type: ChangeLog
+    url: changelog/acord-changelog.yml
+    name: ACORD standards release + enhancement-report history
+  - type: Conventions
+    url: conventions/acord-conventions.yml
+    name: ACORD cross-cutting conventions + reversibility
+  - type: Packages
+    url: packages/acord-packages.yml
+    name: Client packages (measured zero first-party)
+  - type: Plans
+    url: plans/acord-plans-pricing.yml
+    name: ACORD membership-gated standards access
+  - type: RateLimits
+    url: rate-limits/acord-rate-limits.yml
+    name: Rate limits (none published)
+  - type: Pricing
+    url: https://www.acord.org/membership-participation/programs-offerings
+  - type: Login
+    url: https://www.acord.org/account/login
+  - type: TermsOfService
+    url: https://www.acord.org/terms-of-use
+  - type: PrivacyPolicy
+    url: https://www.acord.org/privacy-policy
+  - type: HelpCenter
+    url: https://acord.atlassian.net/servicedesk/customer/portal/35
   - type: Features
     data:
       - name: XML Data Standards
@@ -270,17 +303,58 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
-modified: '2026-04-19'
+created: '2026-04-19'
+modified: '2026-08-30'
 description: >-
-  ACORD is a global standards-setting body for the insurance industry, providing data standards, reference architecture,
-  and digital tools that enable insurers, brokers, and software providers to exchange information.
+  ACORD is the global standards-setting body for the insurance industry, publishing the data
+  standards that insurers, reinsurers, brokers, MGAs and software vendors use to exchange
+  policy, claims, party, underwriting, accounting and settlement data: ACORD XML and AL3 for
+  property & casualty, Life & Annuity XML and DTCC EDI, the Global Reinsurance & Large
+  Commercial (GRLC) standards behind EBOT, ECOT, GPM and CRP, and the JSON/YAML
+  Next-Generation Digital Standards (NGDS) aimed at REST APIs and microservices. ACORD
+  operates no public API of its own; standards and schemas are delivered to members under
+  licence, and its commercial subsidiary ACORD Solutions Group runs the ADEPT data exchange
+  platform under separate agreement.
 name: ACORD
 type: Index
 specificationVersion: '0.23'
 tags:
   - Claims
+  - Data Standards
   - Insurance
   - Policy
+  - Property Casualty
+  - Reinsurance
   - Standards
   - Underwriting
+  - XML
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/acord.png
+
+x-enrichment:
+  date: '2026-08-30'
+  status: minimal
+  artifacts_added: 8
+  pass: local-v1
+x-coverage:
+  state: gated
+  reason: customer-only-docs
+  detail: >-
+    Every ACORD standards artifact — the NGDS schemas, Master Object List, Master Resource
+    Definitions and Master Deprecation List — is published only as a /file-download/<uuid>
+    link that 302s an anonymous request into Microsoft Entra member sign-in, and ACORD's own
+    downloads page states you must first join a membership or participation program before an
+    acord.org account will grant access; the one real REST API in the estate, ACORD Solutions
+    Group's ADEPT, releases its specifications to GRLC members and licensed integrators at
+    ASG's discretion.
+  evidence:
+    - url: https://www.acord.org/file-download/04dcef0d-6222-46a2-911f-5c905db8e086
+      status: 302
+    - url: https://www.acord.org/standards-architecture/acord-data-standards/standards-downloads
+      status: 200
+    - url: https://www.acord.org/openapi.json
+      status: 404
+    - url: https://standards.acord.org/openapi.json
+      status: 403
+    - url: https://www.acordsolutions.com/openapi.json
+      status: 404
+  checked: '2026-08-30'

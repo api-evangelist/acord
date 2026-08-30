@@ -1,0 +1,72 @@
+specification: API Commons ChangeLog
+specificationVersion: '0.1'
+provider: ACORD
+providerId: acord
+generated: '2026-08-30'
+method: searched
+source: >-
+  https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards
+  and https://www.acord.org/standards-architecture/get-involved/standards-enhancements
+description: >-
+  ACORD publishes no API changelog, because it operates no public API. What it does publish
+  is a standards release train and a set of Standards Enhancement Reports per standards
+  family. Those are the change record, and they are what is captured here.
+scheme: dated standards releases plus per-family Standards Enhancement Reports
+current_version: NGDS Final Release v1-13-0
+current_version_date: '2026-05'
+public_url: https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards
+machine_readable: false
+gated: true
+gate_note: >-
+  Release titles and report titles are listed publicly; every document behind them is a
+  /file-download/<uuid> link that 302s to Microsoft Entra member sign-in.
+entries:
+  - version: NGDS Final Release v1-13-0
+    date: '2026-05'
+    type: release
+    breaking: unknown
+    highlights: >-
+      Current ACORD Next-Generation Digital Standards final release. Complete release
+      document containing all files and artifacts for the release.
+  - version: NGDS Standards Enhancement Report
+    date: '2026-04'
+    type: enhancement-report
+    breaking: unknown
+    highlights: >-
+      Next-Generation Digital Standards Enhancement Report – April 2026; member-voted
+      changes feeding the May 2026 release.
+  - version: P&C XML and AL3 2026-1 SE Report
+    date: '2026'
+    type: enhancement-report
+    breaking: unknown
+    highlights: Property & Casualty XML and AL3 standards enhancements, cycle 2026-1.
+  - version: Life & Annuity Forms SE Reports 2026-04 (ACORD 782, ACORD 951e)
+    date: '2026-04'
+    type: enhancement-report
+    breaking: unknown
+    highlights: Forms standard enhancements for ACORD 782 and ACORD 951e.
+  - version: NGDS Final Release v1-12-0
+    date: '2025-11'
+    type: release
+    breaking: unknown
+    highlights: Prior NGDS final release; still listed and available to members.
+  - version: NGDS Object Model launch
+    date: '2025-08-28'
+    type: asset
+    breaking: false
+    highlights: >-
+      ACORD launched the NGDS Object Model, a framework aligning NGDS data exchange with
+      business processes and underlying data elements. Reachable at
+      https://standards.acord.org/#/ngds/objectmodel (member sign-in).
+  - version: NGDS Final Release v1-11-0
+    date: '2025-05'
+    type: release
+    breaking: unknown
+    highlights: Prior NGDS final release; still listed and available to members.
+notes: >-
+  breaking is recorded as unknown throughout rather than guessed: the release documents that
+  would state it are behind the member download gate, and inferring breakage from a release
+  title would be fabrication.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

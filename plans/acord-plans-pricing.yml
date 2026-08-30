@@ -6,8 +6,14 @@ providerId: acord
 created: '2026-05-04'
 # Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
 # bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
+# 2026-08-30: upgraded generated -> searched. The membership gate was read directly off
+# ACORD's own Standards Downloads page and confirmed by probe: every standards artifact is
+# a /file-download/<uuid> link that 302s to Microsoft Entra member sign-in. ACORD publishes
+# no price list, so plan_count is 1 (the membership itself) with no published dollar value.
+method: searched
+generated: '2026-08-30'
+modified: '2026-08-30'
+plan_count: 1
 reconciled: false
 tags:
   - ACORD
@@ -23,9 +29,30 @@ description: ACORD is the global standards-setting body for the insurance indust
   XML, NGDS / Next-Generation Digital Standards, Reinsurance & Large Commercial Specifications) are
   delivered to member organizations under member agreements. Public per-API pricing is not published —
   access is gated by ACORD membership, which is sold via direct engagement with the ACORD membership team.
+source: https://www.acord.org/standards-architecture/acord-data-standards/standards-downloads
 sources:
-  - https://www.acord.org/standards-architecture/acord-data-standards
-  - https://www.acord.org/about-acord/membership
+  - https://www.acord.org/standards-architecture/acord-data-standards/standards-downloads
+  - https://www.acord.org/membership-participation/participate/join
+  - https://www.acord.org/membership-participation/programs-offerings
+evidence:
+  - url: https://www.acord.org/standards-architecture/acord-data-standards/standards-downloads
+    status: 200
+    quote: >-
+      "Once you join the proper ACORD membership or participation program, you will need to
+      set up an account on acord.org to access the Standards and corresponding files
+      available for that program. ... If you are interested in ACORD Membership, please
+      email Member Services."
+  - url: https://www.acord.org/file-download/04dcef0d-6222-46a2-911f-5c905db8e086
+    status: 200
+    note: >-
+      Followed redirects to
+      login.microsoftonline.com/44530ff1-5b52-459a-a4b9-66aa95755dfe/oauth2/v2.0/authorize —
+      an anonymous request for a standards artifact lands on member sign-in, never on a file.
+  - url: https://www.acord.org/membership-participation/participate/join
+    status: 200
+  - url: mailto:memberservices@acord.org
+    status: null
+    note: The pricing channel ACORD itself names on the downloads page.
 notes: ACORD does not publish a public API price list. Membership dues vary by organization type (carrier,
   broker/agent, vendor/solution provider, reinsurer) and revenue band, and are quoted by ACORD. The
   scaffold below names the membership-based access plan; specific dollar values must come from the

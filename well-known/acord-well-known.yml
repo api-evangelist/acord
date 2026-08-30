@@ -1,0 +1,96 @@
+specification: API Commons Well-Known
+specificationVersion: '0.1'
+provider: ACORD
+providerId: acord
+generated: '2026-08-30'
+method: probed
+source: >-
+  Direct HTTP probes of every ACORD-controlled host discovered in this pass
+  (www.acord.org, standards.acord.org, ngdsobjectmodel.acord.org,
+  prod-sso.acord.org and www.acordsolutions.com, the ACORD Solutions Group site).
+description: >-
+  ACORD serves no /.well-known documents on any host it controls. Every canonical path
+  was probed and returned 404 (or 403 from the WAF in front of standards.acord.org).
+  No WellKnown or SecurityTxt pointer is emitted, because a recorded absence is not a
+  presence. ACORD does operate an OpenID Connect single sign-on for its member portal,
+  but the OIDC discovery document is served by Microsoft Entra ID under
+  login.microsoftonline.com, not by an ACORD host, so it is recorded in
+  conformance/acord-conformance.yml rather than claimed here.
+hosts:
+  - host: www.acord.org
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: standards.acord.org
+    note: >-
+      Angular single-page app ("Standards Online"). Every path other than / is answered
+      403 by the edge, including /robots.txt, so absence here is a WAF policy rather than
+      a proven 404.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 403
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 403
+        file: null
+  - host: ngdsobjectmodel.acord.org
+    note: >-
+      Host resolves and answers 200 at / with the default "IIS Windows Server" placeholder
+      page; the NGDS Object Model application it is named for is actually served from
+      standards.acord.org/#/ngds/objectmodel.
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+  - host: prod-sso.acord.org
+    note: ACORD SSO callback host; no discovery document of its own.
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        file: null
+  - host: www.acordsolutions.com
+    note: ACORD Solutions Group, the commercial subsidiary that operates ADEPT.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

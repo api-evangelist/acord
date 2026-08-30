@@ -1,0 +1,119 @@
+specification: API Commons Conventions
+specificationVersion: '0.1'
+provider: ACORD
+providerId: acord
+generated: '2026-08-30'
+method: searched
+source: >-
+  https://www.acord.org/standards-architecture/acord-data-standards ,
+  https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards ,
+  https://www.acord.org/standards-architecture/reference-architecture ,
+  https://www.acordsolutions.com/solutions/adept
+description: >-
+  Cross-cutting runtime semantics for ACORD. Recorded honestly and mostly as absent: ACORD
+  is a standards body, not an API operator, so there is no ACORD-hosted request/response
+  surface whose conventions could be observed. Where ACORD does publish governing rules —
+  Naming & Design Rules, Data Representation and Interchange, the Reference Architecture —
+  those are named. Nothing in this file is derived from the OpenAPI documents in this repo,
+  which are API Evangelist scaffolds pointing at example.com hosts.
+surface:
+  provider_operates_api: false
+  note: >-
+    The one real API in the ACORD orbit is operated by ACORD Solutions Group, the commercial
+    subsidiary: ADEPT is described as "a real-time, cloud-based digital data exchange
+    platform ... With a RESTful API architecture", and status.acordsolutions.com lists live
+    "API Service (XML/JSON)" and "API Services / Document Retrievals" components. Its
+    reference is not public — access to ACORD Solutions Group API documentation is granted to
+    GRLC members and licensed integrators at ASG's discretion — so its conventions cannot be
+    recorded without fabricating them.
+authentication:
+  style: not-published
+  observed: >-
+    OpenID Connect on Microsoft Entra ID for the acord.org member portal and for every
+    /file-download/<uuid> standards artifact. This is portal sign-in, not API auth.
+  source: https://www.acord.org/account/login
+governing_rules:
+  - name: Naming & Design Rules (NDR)
+    scope: All ACORD standards
+    description: >-
+      Published under Global Common Services as "Rules and guides relevant across all
+      Standards, including Naming & Design, DRI, AMS SOAP, and more."
+    source: https://www.acord.org/standards-architecture/acord-data-standards
+    gated: true
+  - name: Data Representation and Interchange (DRI)
+    scope: All ACORD standards
+    description: Cross-standard data representation and interchange rules.
+    source: https://www.acord.org/standards-architecture/acord-data-standards
+    gated: true
+  - name: ACORD Reference Architecture
+    scope: Insurance technology implementations
+    description: >-
+      Structural framework aligning NGDS and the wider standards portfolio to insurance
+      business capabilities.
+    source: https://www.acord.org/standards-architecture/reference-architecture
+    gated: false
+  - name: NGDS Definition and Design Specification
+    scope: Next-Generation Digital Standards
+    description: >-
+      Definition and design specification, implementation guidelines and guidance, and an
+      API Glossary, updated per NGDS release.
+    source: https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards
+    gated: true
+idempotency:
+  supported: na
+  reason: >-
+    No ACORD-operated write surface. ACORD defines message contracts; idempotency is the
+    implementing carrier's or ADEPT's gateway concern and is not published.
+pagination:
+  style: not-published
+  reason: No ACORD-operated endpoint to paginate.
+field_expansion:
+  supported: not-published
+metadata:
+  supported: not-published
+request_id_tracing:
+  supported: not-published
+versioning:
+  style: standards-release
+  detail: >-
+    Versioning is applied to the standard, not to a URL. See lifecycle/acord-lifecycle.yml —
+    NGDS Final Release v1-13-0 (May 2026), twice-yearly cadence, trading partners negotiate
+    accepted versions.
+error_envelope:
+  shape: not-published
+  rfc9457: false
+  detail: >-
+    No public error reference. See conformance/acord-conformance.yml. No errors/ artifact is
+    emitted for this provider because the only 4xx/5xx responses available to derive one from
+    live in scaffold specs.
+rate_limit_signaling:
+  headers: []
+  detail: >-
+    None published. See rate-limits/acord-rate-limits.yml — limits are the implementing
+    gateway's, not ACORD's.
+dry_run_mode:
+  supported: na
+  reason: No ACORD-operated write surface to rehearse against.
+reversibility:
+  grade: na
+  applicable: false
+  reason: >-
+    ACORD operates no public write surface, so there is nothing for an agent to take back.
+    ACORD publishes message standards; the reversal semantics that matter in insurance —
+    cancelling a placement, reversing an accounting entry, withdrawing a claim movement —
+    belong to the GRLC message families (GPM, CRP, EBOT, ECOT) and to the carrier or
+    gateway that processes them, not to an ACORD endpoint. The GRLC specifications that
+    would state any such semantics are behind the ACORD member download gate, so no
+    reversal operation and no window is asserted here.
+    reversibility, dry_run_mode and idempotency are all `na` for this provider by
+    measurement, not by omission.
+  surfaces: []
+cross_links:
+  errors: null
+  lifecycle: lifecycle/acord-lifecycle.yml
+  authentication: authentication/acord-authentication.yml
+  rate_limits: rate-limits/acord-rate-limits.yml
+  conformance: conformance/acord-conformance.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

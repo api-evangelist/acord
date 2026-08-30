@@ -6,8 +6,13 @@ providerId: acord
 created: '2026-05-04'
 # Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
 # bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
+# 2026-08-30: upgraded generated -> searched. Re-checked against ACORD's own surface and
+# against the one ACORD-operated runtime signal that does exist — the ACORD Solutions Group
+# Statuspage. No published limits anywhere; limit_count is an honest zero.
+method: searched
+generated: '2026-08-30'
+modified: '2026-08-30'
+limit_count: 0
 reconciled: false
 tags:
   - ACORD
@@ -21,8 +26,29 @@ description: ACORD publishes data-exchange standards (XML, JSON / NGDS) rather t
   hosted API. Implementations live inside carriers, brokers, and reinsurers; rate limits are governed
   by the implementer's own gateway, not by ACORD. ACORD itself does not publish per-second / per-minute
   numbers because there is no single ACORD-hosted endpoint.
+source: https://www.acord.org/standards-architecture/acord-data-standards
 sources:
   - https://www.acord.org/standards-architecture/acord-data-standards
+  - https://www.acordsolutions.com/solutions/adept
+  - https://status.acordsolutions.com/api/v2/summary.json
+evidence:
+  - url: https://www.acord.org/standards-architecture/acord-data-standards
+    status: 200
+    note: Standards portfolio page. No rate-limit or throttling language anywhere on it.
+  - url: https://www.acordsolutions.com/solutions/adept
+    status: 200
+    note: >-
+      ADEPT is described as a real-time RESTful data exchange gateway operated by ACORD
+      Solutions Group, but publishes no limits, no quotas and no response headers. Its API
+      documentation is released to GRLC members and licensed integrators at ASG's discretion.
+  - url: https://status.acordsolutions.com/api/v2/summary.json
+    status: 200
+    note: >-
+      Public Statuspage API, probed 2026-08-30. Names live "API Service (XML/JSON)" and
+      "API Services / Document Retrievals" components, confirming a real API exists, but
+      carries no rate-limit data.
+headers: []
+exhaustion_status_code: null
 notes: No central ACORD API to rate-limit. Reconciled flag is false because there are no provider-published
   numbers; downstream limits are set per-carrier when ACORD messages are exposed via SOAP / REST.
 responseCodes: {}

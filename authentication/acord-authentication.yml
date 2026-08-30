@@ -1,6 +1,7 @@
-generated: '2026-07-11'
+generated: '2026-08-30'
 method: derived
-source: openapi/acord-ngds-openapi.yml
+source: openapi/acord-claims-api-openapi.yml, openapi/acord-party-api-openapi.yml, openapi/acord-policy-api-openapi.yml,
+  openapi/acord-underwriting-api-openapi.yml
 summary:
   types:
   - http
@@ -15,10 +16,16 @@ schemes:
     tokenUrl: https://auth.insurer-internal.example.com/oauth/token
     scopes: 4
   sources:
-  - openapi/acord-ngds-openapi.yml
+  - openapi/acord-claims-api-openapi.yml
+  - openapi/acord-party-api-openapi.yml
+  - openapi/acord-policy-api-openapi.yml
+  - openapi/acord-underwriting-api-openapi.yml
 - name: bearerAuth
   type: http
   scheme: bearer
   bearerFormat: JWT
   sources:
-  - openapi/acord-ngds-openapi.yml
+  - openapi/acord-claims-api-openapi.yml
+  - openapi/acord-party-api-openapi.yml
+  - openapi/acord-policy-api-openapi.yml
+  - openapi/acord-underwriting-api-openapi.yml

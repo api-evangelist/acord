@@ -1,0 +1,77 @@
+# ACORD
+
+> ACORD is the global standards-setting body for the insurance industry. It publishes the
+> data standards — ACORD XML, AL3, Next-Generation Digital Standards (NGDS), and the Global
+> Reinsurance & Large Commercial (GRLC) standards — that insurers, reinsurers, brokers,
+> MGAs and software vendors use to exchange policy, claims, party, underwriting, accounting
+> and settlement data. ACORD does not operate a public API. Its standards and schemas are
+> delivered to members under licence, and its commercial subsidiary, ACORD Solutions Group,
+> operates the ADEPT data exchange platform under separate agreement.
+
+<!--
+generated: 2026-08-30
+method: generated
+source: apis.yml plus artifacts in this repository; every URL below was probed on
+        2026-08-30 and returned HTTP 200 unless annotated otherwise.
+authored-by: API Evangelist. This file is NOT published by ACORD; ACORD serves no
+        /llms.txt (https://www.acord.org/llms.txt returned 404 on 2026-08-30).
+-->
+
+## What ACORD actually publishes
+
+- ACORD has **no public OpenAPI, AsyncAPI, GraphQL SDL, WSDL or JSON Schema at a stable
+  public URL**. Probed /openapi.json, /openapi.yaml and /swagger.json on www.acord.org,
+  ngdsobjectmodel.acord.org and www.acordsolutions.com (404) and standards.acord.org (403).
+- ACORD has **no GitHub organization**. api.github.com/orgs returned 404 for acord, ACORD,
+  acord-standards, ACORDstandards and acordsolutions.
+- ACORD has **no MCP server**, **no A2A agent card**, and **no /.well-known documents** on
+  any host it controls.
+- Every standards artifact download is a `/file-download/<uuid>` link that redirects to
+  Microsoft Entra member sign-in. Membership is the gate.
+
+## Standards
+
+- [ACORD Data Standards](https://www.acord.org/standards-architecture/acord-data-standards): The standards portfolio — P&C XML and AL3, Life & Annuity XML and DTCC EDI, Global Reinsurance & Large Commercial XML/JSON, Multi-Functional, Asia-Pacific, Southern Africa, and Global Common Services (Naming & Design Rules, DRI, AMS SOAP).
+- [Next-Generation Digital Standards (NGDS)](https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards): Granular, transaction-centric JSON/YAML standards for REST APIs, microservices and IoT. Current final release v1-13-0 (May 2026); prior releases v1-12-0 (Nov 2025), v1-11-0 (May 2025). Ships Master Object List, Master Resource Definitions, Master CodeLists, Master Deprecation List, Schemas With Reference and Schemas Without Reference — all member-gated.
+- [Getting Started with NGDS](https://www.acord.org/docs/default-source/standards-multi-functional-factsheets/getting-starting-with-ngds.pdf): Public PDF factsheet, no sign-in required.
+- [Global Reinsurance & Large Commercial Data Standards](https://www.acord.org/standards-architecture/acord-data-standards/Global_Reinsurance_Data_Standards): GRLC message families — GPM (placing), CRP (contract, risk, pre-accounting), EBOT (accounting), ECOT (claim movement).
+- [ACORD Reference Architecture](https://www.acord.org/standards-architecture/reference-architecture): Structural framework aligning the standards to insurance business capabilities.
+- [Standards Downloads](https://www.acord.org/standards-architecture/acord-data-standards/standards-downloads): The download index. Files require ACORD membership plus an acord.org account.
+- [NGDS Object Model](https://standards.acord.org/#/ngds/objectmodel): Angular single-page application ("Standards Online"). Member sign-in; the host answers 403 to anything but `/`.
+
+## Change and governance
+
+- [Standards Enhancements](https://www.acord.org/standards-architecture/get-involved/standards-enhancements): Standards Enhancement Reports per family — NGDS April 2026, P&C XML and AL3 2026-1, L&A EDI DTCC voting results, Forms 2026-04.
+- [Standards Project & Advisory Groups](https://www.acord.org/standards-architecture/get-involved/standards-project-advisory-groups): How members propose, review and vote on changes.
+- [Implement Standards](https://www.acord.org/standards-architecture/implement-standards): Implementation guides and construction tools (member-gated).
+- [Standards Online Applications](https://www.acord.org/standards-architecture/standards-online-applications): ACORD's member-facing standards tooling.
+
+## ACORD Solutions Group (commercial subsidiary)
+
+- [ACORD Solutions Group](https://www.acordsolutions.com/): Operates ADEPT, ACORD Conductor, ACORD Converter and ACORD Transcriber.
+- [ADEPT](https://www.acordsolutions.com/solutions/adept): "Real-time, cloud-based digital data exchange platform ... With a RESTful API architecture", gateway for global reinsurance and specialty markets. **API specifications are not public** — released to ACORD GRLC members and licensed integrators at ASG's discretion.
+- [ASG Status](https://status.acordsolutions.com/): Atlassian Statuspage with a public JSON API at https://status.acordsolutions.com/api/v2/summary.json. Names live components including "API Service (XML/JSON)", "API Services / Document Retrievals", "AMS Service" and "ADEPT to AMS exchange". This is the only machine-readable runtime surface in the ACORD estate.
+- [ASG Support](https://support.acordsolutions.com/hc/en-us): Zendesk help centre (answers 403 to non-browser user agents).
+
+## Membership and access
+
+- [Join ACORD](https://www.acord.org/membership-participation/participate/join)
+- [Programs & Offerings](https://www.acord.org/membership-participation/programs-offerings)
+- [Sign in](https://www.acord.org/account/login): OpenID Connect relying party on Microsoft Entra ID, callback at prod-sso.acord.org.
+- [Member Directory](https://www.acord.org/membership-participation/member-directory)
+- Membership pricing is not published; ACORD directs enquiries to memberservices@acord.org.
+
+## Company
+
+- [About ACORD](https://www.acord.org/ACORD-about)
+- [ACORD News](https://www.acord.org/ACORD-about/acord-news)
+- [Support / Service Desk](https://acord.atlassian.net/servicedesk/customer/portal/35)
+- [Terms of Use](https://www.acord.org/terms-of-use)
+- [Privacy Policy](https://www.acord.org/privacy-policy)
+- [LinkedIn](https://www.linkedin.com/company/acord)
+
+## Optional
+
+- [Why Standards?](https://www.acord.org/standards-architecture/why-standards)
+- [Ruschlikon](https://www.acord.org/standards-architecture/ruschlikon)
+- [Research & Education](https://www.acord.org/research-education): Research, training and the ACORD Certified Expert (ACE) program.

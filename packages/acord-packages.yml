@@ -1,0 +1,38 @@
+specification: API Commons Packages
+specificationVersion: '0.1'
+provider: ACORD
+providerId: acord
+generated: '2026-08-30'
+method: searched
+source: >-
+  Searched registry.npmjs.org, pypi.org, and the acord.org / acordsolutions.com sites for a
+  first-party ACORD client library, SDK or CLI. Probed api.github.com/orgs for acord, ACORD,
+  acord-standards, ACORDstandards and acordsolutions — all 404, so ACORD publishes no GitHub
+  organization to host one.
+description: >-
+  ACORD publishes no first-party SDK or client package on any public registry. This is
+  consistent with its model: ACORD ships message standards and schemas to members under
+  licence, and implementers build against those inside their own systems. Vendor and
+  community libraries that implement ACORD formats exist, but none is authored by ACORD, so
+  none is listed here.
+package_count: 0
+official_package_count: 0
+packages: []
+rejected_candidates:
+  - name: acord
+    registry: pypi
+    version: 0.0.1a0
+    published: null
+    official: false
+    reason: >-
+      Name collision only. PyPI "ACord" is a Discord API wrapper by Mecha-Karen
+      (github.com/Mecha-Karen/acord), unrelated to ACORD the insurance standards body.
+      Recorded so a later pass does not re-find it and mistake it for first-party.
+notes: >-
+  Member-only construction tools and implementation guides are referenced on
+  https://www.acord.org/standards-architecture/implement-standards , but they are delivered
+  through the member download gate rather than a package registry, so they carry no
+  registry version or publish date to record. No SDKs pointer is emitted for this provider.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

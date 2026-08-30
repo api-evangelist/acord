@@ -1,0 +1,36 @@
+specification: API Commons MCP
+specificationVersion: '0.1'
+provider: ACORD
+providerId: acord
+generated: '2026-08-30'
+method: searched
+source: >-
+  Searched acord.org, standards.acord.org, www.acordsolutions.com (ACORD Solutions Group),
+  the npm and PyPI registries, and the public web for an ACORD-published Model Context
+  Protocol server. None exists.
+description: >-
+  ACORD publishes no MCP server, hosted or local. There is no remote endpoint, no npx or
+  pip installable package, and no agent-facing tool surface of any kind on an ACORD host.
+  No candidate tool list is derived here either: the only OpenAPI documents in this repo
+  are API Evangelist scaffolds whose servers[] point at the reserved documentation domain
+  example.com (see notes), so deriving MCP tools from them would manufacture an agent
+  surface ACORD has never shipped.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+servers: []
+tools: []
+notes: >-
+  ACORD Solutions Group's ADEPT platform is described on acordsolutions.com as having a
+  RESTful API service layer, and status.acordsolutions.com lists live components named
+  "API Service (XML/JSON)" and "API Services / Document Retrievals", so a real API does
+  exist behind the commercial subsidiary. Its specifications are not published: access is
+  granted to ACORD GRLC members and licensed integrators at ACORD Solutions Group's
+  discretion. Until that contract is public there is nothing to bind MCP tools to.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: ACORD Next-Generation Digital Standards (NGDS) Claims API
   description: The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.
@@ -9,6 +9,23 @@ info:
   license:
     name: ACORD License
     url: https://www.acord.org
+x-authored-by: API Evangelist
+x-modeled-from: >-
+  Modeled by API Evangelist from ACORD's public description of the Next-Generation Digital
+  Standards. ACORD publishes NO OpenAPI. Verified 2026-08-30: /openapi.json, /openapi.yaml
+  and /swagger.json return 404 on www.acord.org, ngdsobjectmodel.acord.org and
+  www.acordsolutions.com, and 403 on standards.acord.org; every NGDS artifact is a
+  /file-download/<uuid> link that 302s to Microsoft Entra member sign-in. The servers[] host
+  below (api.insurer-internal.example.com) is a placeholder on the IETF-reserved
+  documentation domain example.com, not an ACORD endpoint. This document is an API
+  Evangelist illustration of the standard, NOT a contract published by ACORD, and must not
+  be credited to ACORD as a published API.
+x-provenance:
+  method: generated
+  authored_by: API Evangelist
+  authored_date: '2026-05'
+  marked_date: '2026-08-30'
+  provider_published: false
 servers:
 - url: https://api.insurer-internal.example.com/ngds
   description: NGDS REST API endpoint
@@ -219,117 +236,31 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Party:
       type: object
       properties:
         partyId:
           type: string
-        partyType:
-          type: string
-          enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
-          type: string
-        lastName:
-          type: string
-        organizationName:
-          type: string
-        taxId:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
-    ClaimRequest:
-      type: object
-      required:
-      - policyId
-      - lossDate
-      - lossDescription
-      properties:
-        policyId:
-          type: string
-        lossDate:
-          type: string
-          format: date
-        lossDescription:
-          type: string
-        lossLocation:
-          $ref: '#/components/schemas/Address'
-        claimant:
-          $ref: '#/components/schemas/PartyRequest'
-        estimatedLossAmount:
-          type: number
-    Pagination:
-      type: object
-      properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        totalPages:
-          type: integer
-        totalItems:
-          type: integer
-    Address:
-      type: object
-      properties:
-        street1:
-          type: string
-        street2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-          default: US
-    Contact:
-      type: object
-      properties:
-        contactType:
-          type: string
-          enum:
-          - Phone
-          - Email
-          - Fax
-        value:
-          type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
-    ClaimList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Claim'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    PartyRequest:
-      type: object
-      required:
-      - partyType
-      properties:
         partyType:
           type: string
           enum:
@@ -392,25 +323,111 @@ components:
         createdAt:
           type: string
           format: date-time
-  responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid input data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    ClaimList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Claim'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ClaimRequest:
+      type: object
+      required:
+      - policyId
+      - lossDate
+      - lossDescription
+      properties:
+        policyId:
+          type: string
+        lossDate:
+          type: string
+          format: date
+        lossDescription:
+          type: string
+        lossLocation:
+          $ref: '#/components/schemas/Address'
+        claimant:
+          $ref: '#/components/schemas/PartyRequest'
+        estimatedLossAmount:
+          type: number
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+    PartyRequest:
+      type: object
+      required:
+      - partyType
+      properties:
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum:
+          - Phone
+          - Email
+          - Fax
+        value:
+          type: string
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
   securitySchemes:
     oauth2:
       type: oauth2

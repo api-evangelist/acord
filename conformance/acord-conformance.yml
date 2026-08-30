@@ -1,0 +1,141 @@
+specification: API Commons Conformance
+specificationVersion: '0.1'
+provider: ACORD
+providerId: acord
+generated: '2026-08-30'
+method: searched
+source: >-
+  https://www.acord.org/standards-architecture/acord-data-standards ,
+  https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards ,
+  https://www.acord.org/standards-architecture/get-involved/standards-enhancements ,
+  https://www.acordsolutions.com/solutions/adept , and direct HTTP probes of
+  https://www.acord.org/account/login and https://status.acordsolutions.com/api/v2/summary.json
+description: >-
+  ACORD is unusual in this catalog: it is not a provider that conforms to a domain
+  standard, it is the body that authors the domain standard for global insurance. The
+  entries below record the standards ACORD itself publishes and stewards, plus the
+  cross-cutting standards observed on ACORD-operated infrastructure. Every entry cites a
+  page or a probe. Nothing is asserted from the OpenAPI documents in this repo, which are
+  API Evangelist scaffolds rather than ACORD-published contracts.
+domain_standards:
+  - id: acord-xml
+    name: ACORD XML Standards (Property & Casualty, Life & Annuity, Reinsurance)
+    role: author
+    conforms: true
+    evidence: >-
+      Published by ACORD and listed on the ACORD Data Standards page as XML and AL3
+      standards for P&C, Life & Annuity, Global Reinsurance & Large Commercial,
+      Multi-Functional, Asia-Pacific and Southern Africa.
+    source: https://www.acord.org/standards-architecture/acord-data-standards
+  - id: acord-al3
+    name: ACORD AL3
+    role: author
+    conforms: true
+    evidence: >-
+      Flat-file interchange standard for P&C download between carriers and agency
+      management systems; listed alongside ACORD XML on the Data Standards page.
+      Implementation requires an ACORD licence.
+    source: https://www.acord.org/standards-architecture/acord-data-standards
+  - id: acord-ngds
+    name: ACORD Next-Generation Digital Standards (NGDS)
+    role: author
+    conforms: true
+    evidence: >-
+      "Granular, transaction-centric Standards for APIs, microservices, IoT, and more",
+      shipped as JSON/YAML artifacts. The NGDS page lists Final Release v1-13-0 (May 2026),
+      v1-12-0 (Nov 2025) and v1-11-0 (May 2025), plus Master Artifacts (Master Object List,
+      Master Resource Definitions, Master CodeLists, Schemas With Reference, Schemas
+      Without Reference) and an API Glossary.
+    source: https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards
+  - id: acord-grlc
+    name: ACORD Global Reinsurance & Large Commercial (GRLC) Data Standards
+    role: author
+    conforms: true
+    evidence: >-
+      GRLC message families named on the ADEPT product page: GPM (placing), CRP (contract,
+      risk and pre-accounting), EBOT (accounting) and ECOT (claim movement).
+    source: https://www.acordsolutions.com/solutions/adept
+  - id: acord-ams-soap
+    name: ACORD AMS SOAP (Global Common Services)
+    role: author
+    conforms: true
+    evidence: >-
+      The Data Standards page lists "Global Common Services — Rules and guides relevant
+      across all Standards, including Naming & Design, DRI, AMS SOAP". The status page for
+      ACORD Solutions Group lists live "AMS Service" and "ADEPT to AMS exchange"
+      components. No WSDL is published at a public URL; see gaps below.
+    source: https://www.acord.org/standards-architecture/acord-data-standards
+  - id: dtcc-edi
+    name: DTCC EDI (Life & Annuity)
+    role: publisher-of-profile
+    conforms: true
+    evidence: >-
+      The Life & Annuity standards family is described as "Standards and documentation for
+      L&A, as well as DTCC EDI specification files", and the Standards Enhancements page
+      carries an "L&A EDI DTCC Standards Enhancements - Current Listing with Voting Results".
+    source: https://www.acord.org/standards-architecture/get-involved/standards-enhancements
+cross_cutting:
+  - id: oidc
+    name: OpenID Connect
+    conforms: true
+    evidence: >-
+      Probed 2026-08-30: https://www.acord.org/account/login (and any /file-download/<uuid>)
+      302s into
+      https://login.microsoftonline.com/44530ff1-5b52-459a-a4b9-66aa95755dfe/oauth2/v2.0/authorize
+      with response_type=code and scope=openid+profile, redirecting back to
+      https://prod-sso.acord.org/acord-sso/public/v1/sso/oidc/callback. ACORD's member
+      portal is an OIDC relying party on Microsoft Entra ID. This governs the member
+      portal, not an ACORD API.
+    source: https://www.acord.org/account/login
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: partial
+    evidence: >-
+      OAuth 2.0 authorization-code flow observed only as the transport under the portal's
+      OIDC sign-in above. ACORD publishes no OAuth-protected API and no authorization
+      server of its own; the tokenUrl in authentication/ and scopes/ is inherited from an
+      API Evangelist scaffold spec, not from ACORD.
+    source: https://www.acord.org/account/login
+  - id: soc2
+    name: SOC 2 (AICPA)
+    conforms: true
+    evidence: >-
+      ACORD Solutions Group displays the AICPA SOC badge in the site footer, linked to
+      https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2 .
+      This is a first-party badge on ACORD Solutions Group's own site; no audit report,
+      report request form, or trust centre is published, so the scope and type of the
+      attestation cannot be verified from public material.
+    source: https://www.acordsolutions.com/
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    conforms: false
+    evidence: >-
+      No ACORD-published contract or error reference is publicly readable, so no problem
+      type registry can be observed. Not asserted either way about the ADEPT API.
+    source: https://www.acord.org/standards-architecture/acord-data-standards
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: false
+    evidence: >-
+      NGDS is described as targeting "APIs, microservices, IoT" and ships JSON/YAML
+      artifacts, but no OpenAPI document is served from any ACORD host. Probed
+      /openapi.json, /openapi.yaml and /swagger.json on www.acord.org (404),
+      ngdsobjectmodel.acord.org (404), standards.acord.org (403) and
+      www.acordsolutions.com (404). Every NGDS artifact download is a
+      /file-download/<uuid> link that 302s to member sign-in.
+    source: https://www.acord.org/standards-architecture/acord-data-standards/standards-downloads
+gaps:
+  - >-
+    No public WSDL. ACORD AMS SOAP is a member-licensed standard; no ?wsdl or ?singleWsdl
+    surface exists on any reachable ACORD host, and no ACORD GitHub organization exists
+    (probed api.github.com/orgs for acord, ACORD, acord-standards, acordsolutions — all 404).
+  - >-
+    No AsyncAPI and no public event catalog, despite ADEPT being a real-time messaging
+    gateway.
+  - >-
+    NGDS ships JSON Schemas ("Schemas With Reference" / "Schemas Without Reference") that
+    would satisfy contract_present if published at a stable public URL. They are behind the
+    member download gate.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

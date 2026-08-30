@@ -1,9 +1,25 @@
-generated: '2026-07-11'
+generated: '2026-08-30'
 method: derived
-source: openapi/acord-ngds-openapi.yml
+source: openapi/acord-claims-api-openapi.yml, openapi/acord-party-api-openapi.yml, openapi/acord-policy-api-openapi.yml,
+  openapi/acord-underwriting-api-openapi.yml
 schemes:
 - name: oauth2
-  source: openapi/acord-ngds-openapi.yml
+  source: openapi/acord-claims-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+- name: oauth2
+  source: openapi/acord-party-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+- name: oauth2
+  source: openapi/acord-policy-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.insurer-internal.example.com/oauth/token
+- name: oauth2
+  source: openapi/acord-underwriting-api-openapi.yml
   flows:
   - flow: clientCredentials
     tokenUrl: https://auth.insurer-internal.example.com/oauth/token
@@ -13,22 +29,34 @@ scopes:
   flows:
   - clientCredentials
   sources:
-  - openapi/acord-ngds-openapi.yml
+  - openapi/acord-claims-api-openapi.yml
+  - openapi/acord-party-api-openapi.yml
+  - openapi/acord-policy-api-openapi.yml
+  - openapi/acord-underwriting-api-openapi.yml
 - scope: read:policies
   description: Read policy data
   flows:
   - clientCredentials
   sources:
-  - openapi/acord-ngds-openapi.yml
+  - openapi/acord-claims-api-openapi.yml
+  - openapi/acord-party-api-openapi.yml
+  - openapi/acord-policy-api-openapi.yml
+  - openapi/acord-underwriting-api-openapi.yml
 - scope: write:claims
   description: Submit and update claims
   flows:
   - clientCredentials
   sources:
-  - openapi/acord-ngds-openapi.yml
+  - openapi/acord-claims-api-openapi.yml
+  - openapi/acord-party-api-openapi.yml
+  - openapi/acord-policy-api-openapi.yml
+  - openapi/acord-underwriting-api-openapi.yml
 - scope: write:policies
   description: Create and modify policies
   flows:
   - clientCredentials
   sources:
-  - openapi/acord-ngds-openapi.yml
+  - openapi/acord-claims-api-openapi.yml
+  - openapi/acord-party-api-openapi.yml
+  - openapi/acord-policy-api-openapi.yml
+  - openapi/acord-underwriting-api-openapi.yml

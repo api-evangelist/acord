@@ -1,0 +1,100 @@
+specification: API Commons Lifecycle
+specificationVersion: '0.1'
+provider: ACORD
+providerId: acord
+generated: '2026-08-30'
+method: searched
+source: >-
+  https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards ,
+  https://www.acord.org/standards-architecture/get-involved/standards-enhancements ,
+  https://status.acordsolutions.com/ and its public Statuspage API
+  https://status.acordsolutions.com/api/v2/summary.json (probed 2026-08-30, HTTP 200)
+description: >-
+  ACORD versions standards releases, not a hosted API. The lifecycle recorded here is the
+  standards release train plus the operational status surface run by ACORD Solutions Group,
+  the commercial subsidiary that operates ADEPT.
+versioning:
+  scheme: dotted release with a dated final-release document (v<major>-<minor>-<patch>)
+  current_version: NGDS Final Release v1-13-0
+  current_version_date: '2026-05'
+  cadence: >-
+    Twice yearly for NGDS. Observed final releases: v1-13-0 (May 2026), v1-12-0 (Nov 2025),
+    v1-11-0 (May 2025). Prior releases remain listed and downloadable to members.
+  source: https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards
+  in_url: false
+  note: >-
+    Versioning applies to the standard, not to a URL path. Trading partners negotiate which
+    ACORD release and which message versions they accept; there is no ACORD-operated
+    endpoint to version.
+deprecation:
+  policy_published: true
+  artifact: NGDS Master Deprecation List
+  mechanism: >-
+    ACORD ships a "Master Deprecation List" as one of the NGDS Master Artifacts, alongside
+    the Master Object List and Master Resource Definitions, refreshed against the current
+    release. Changes reach members first through Standards Enhancement Reports, which are
+    proposed, reviewed and voted on by members before a release.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  gated: true
+  gate_note: >-
+    The Master Deprecation List is a /file-download/<uuid> link that 302s to Microsoft Entra
+    sign-in; only ACORD members with the relevant program can read it.
+  source: https://www.acord.org/standards-architecture/acord-data-standards/next-generation-digital-standards
+change_process:
+  name: ACORD Standards Enhancement Request process
+  description: >-
+    ACORD facilitates an open standards development process: changes are proposed, presented
+    for review, and voted on by members. Standards Project & Advisory Groups carry the work;
+    Standards Enhancement Reports publish recent and upcoming changes per standards family.
+  reports_observed:
+    - P&C XML and AL3 2026-1 SE Report
+    - Next-Generation Digital Standards Enhancement Report – April 2026
+    - L&A EDI DTCC Standards Enhancements - Current Listing with Voting Results
+    - Life & Annuity Forms Standard Enhancement Report 2026-04 (ACORD 782)
+    - Life & Annuity Forms Standard Enhancement Report 2026-04 (ACORD 951e)
+  source: https://www.acord.org/standards-architecture/get-involved/standards-enhancements
+status_page:
+  url: https://status.acordsolutions.com/
+  operator: ACORD Solutions Group
+  platform: Atlassian Statuspage
+  machine_readable: true
+  api: https://status.acordsolutions.com/api/v2/summary.json
+  probed: '2026-08-30'
+  http_status: 200
+  indicator_at_probe: none
+  components_observed:
+    - ASG Portal
+    - ACORD Conductor
+    - ACORD Transcriber
+    - Extraction
+    - Population
+    - API Service (XML/JSON)
+    - ACORD Converter
+    - Document Conversion
+    - AL3 Conversion (v1 service)
+    - Mapping
+    - ADEPT
+    - Messaging Workflows
+    - API Services / Document Retrievals
+    - Download
+    - ADEPT to AMS exchange
+    - AMS Service
+    - Third Party Status - Xchanging Services
+  note: >-
+    Subscribers can register for email and SMS incident notifications. This is the strongest
+    public runtime signal ACORD publishes and it names live API components by name.
+sla:
+  published: false
+  note: >-
+    No public SLA. ADEPT is sold under commercial agreement by ACORD Solutions Group;
+    availability commitments are contractual.
+deprecated_operations: []
+notes: >-
+  deprecated_operations is empty by measurement, not by omission: there is no
+  ACORD-published OpenAPI to read deprecated flags from. The OpenAPI documents in this repo
+  are API Evangelist scaffolds and were deliberately not used as a source here.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

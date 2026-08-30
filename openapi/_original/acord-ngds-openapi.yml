@@ -14,6 +14,23 @@ info:
     name: ACORD License
     url: https://www.acord.org
 
+x-authored-by: API Evangelist
+x-modeled-from: >-
+  Modeled by API Evangelist from ACORD's public description of the Next-Generation Digital
+  Standards. ACORD publishes NO OpenAPI. Verified 2026-08-30: /openapi.json, /openapi.yaml
+  and /swagger.json return 404 on www.acord.org, ngdsobjectmodel.acord.org and
+  www.acordsolutions.com, and 403 on standards.acord.org; every NGDS artifact is a
+  /file-download/<uuid> link that 302s to Microsoft Entra member sign-in. The servers[] host
+  below (api.insurer-internal.example.com) is a placeholder on the IETF-reserved
+  documentation domain example.com, not an ACORD endpoint. This document is an API
+  Evangelist illustration of the standard, NOT a contract published by ACORD, and must not
+  be credited to ACORD as a published API.
+x-provenance:
+  method: generated
+  authored_by: API Evangelist
+  authored_date: '2026-05'
+  marked_date: '2026-08-30'
+  provider_published: false
 servers:
 - url: https://api.insurer-internal.example.com/ngds
   description: NGDS REST API endpoint

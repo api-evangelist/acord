@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: ACORD Next-Generation Digital Standards (NGDS) Claims Policy API
   description: The ACORD NGDS API provides granular, transaction-centric REST/JSON standards for insurance data exchange covering underwriting, policy management, and claims administration. Based on the ACORD Object Model with JSON and YAML formats for microservices, IoT, and modern API architectures.
@@ -9,6 +9,23 @@ info:
   license:
     name: ACORD License
     url: https://www.acord.org
+x-authored-by: API Evangelist
+x-modeled-from: >-
+  Modeled by API Evangelist from ACORD's public description of the Next-Generation Digital
+  Standards. ACORD publishes NO OpenAPI. Verified 2026-08-30: /openapi.json, /openapi.yaml
+  and /swagger.json return 404 on www.acord.org, ngdsobjectmodel.acord.org and
+  www.acordsolutions.com, and 403 on standards.acord.org; every NGDS artifact is a
+  /file-download/<uuid> link that 302s to Microsoft Entra member sign-in. The servers[] host
+  below (api.insurer-internal.example.com) is a placeholder on the IETF-reserved
+  documentation domain example.com, not an ACORD endpoint. This document is an API
+  Evangelist illustration of the standard, NOT a contract published by ACORD, and must not
+  be credited to ACORD as a published API.
+x-provenance:
+  method: generated
+  authored_by: API Evangelist
+  authored_date: '2026-05'
+  marked_date: '2026-08-30'
+  provider_published: false
 servers:
 - url: https://api.insurer-internal.example.com/ngds
   description: NGDS REST API endpoint
@@ -287,7 +304,129 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    PolicyRequest:
+      type: object
+      required:
+      - lineOfBusiness
+      - effectiveDate
+      - expirationDate
+      - insuredParty
+      properties:
+        lineOfBusiness:
+          type: string
+          enum:
+          - PropertyCasualty
+          - Life
+          - Annuity
+          - Reinsurance
+        effectiveDate:
+          type: string
+          format: date
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+          format: double
+        currency:
+          type: string
+          default: USD
+        insuredParty:
+          $ref: '#/components/schemas/PartyRequest'
+        coverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoverageRequest'
+    PolicyUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Active
+          - Lapsed
+          - Cancelled
+          - Pending
+          - Expired
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+        endorsements:
+          type: array
+          items:
+            type: object
+            properties:
+              endorsementNumber:
+                type: string
+              description:
+                type: string
+              effectiveDate:
+                type: string
+                format: date
+    Party:
+      type: object
+      properties:
+        partyId:
+          type: string
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    PolicyList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     Coverage:
       type: object
       properties:
@@ -303,6 +442,61 @@ components:
           type: number
         currency:
           type: string
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum:
+          - Phone
+          - Email
+          - Fax
+        value:
+          type: string
+    CoverageRequest:
+      type: object
+      required:
+      - coverageType
+      - limit
+      properties:
+        coverageType:
+          type: string
+        limit:
+          type: number
+        deductible:
+          type: number
+        premium:
+          type: number
+        currency:
+          type: string
+          default: USD
+    PartyRequest:
+      type: object
+      required:
+      - partyType
+      properties:
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
     Policy:
       type: object
       description: ACORD NGDS Policy object representing an insurance contract
@@ -352,87 +546,6 @@ components:
         updatedAt:
           type: string
           format: date-time
-    Party:
-      type: object
-      properties:
-        partyId:
-          type: string
-        partyType:
-          type: string
-          enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
-          type: string
-        lastName:
-          type: string
-        organizationName:
-          type: string
-        taxId:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
-    CoverageRequest:
-      type: object
-      required:
-      - coverageType
-      - limit
-      properties:
-        coverageType:
-          type: string
-        limit:
-          type: number
-        deductible:
-          type: number
-        premium:
-          type: number
-        currency:
-          type: string
-          default: USD
-    PolicyList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Policy'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    PolicyUpdate:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - Active
-          - Lapsed
-          - Cancelled
-          - Pending
-          - Expired
-        expirationDate:
-          type: string
-          format: date
-        premiumAmount:
-          type: number
-        endorsements:
-          type: array
-          items:
-            type: object
-            properties:
-              endorsementNumber:
-                type: string
-              description:
-                type: string
-              effectiveDate:
-                type: string
-                format: date
     Pagination:
       type: object
       properties:
@@ -444,6 +557,17 @@ components:
           type: integer
         totalItems:
           type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
     Address:
       type: object
       properties:
@@ -460,113 +584,6 @@ components:
         country:
           type: string
           default: US
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
-    Contact:
-      type: object
-      properties:
-        contactType:
-          type: string
-          enum:
-          - Phone
-          - Email
-          - Fax
-        value:
-          type: string
-    PartyRequest:
-      type: object
-      required:
-      - partyType
-      properties:
-        partyType:
-          type: string
-          enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
-          type: string
-        lastName:
-          type: string
-        organizationName:
-          type: string
-        taxId:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
-    PolicyRequest:
-      type: object
-      required:
-      - lineOfBusiness
-      - effectiveDate
-      - expirationDate
-      - insuredParty
-      properties:
-        lineOfBusiness:
-          type: string
-          enum:
-          - PropertyCasualty
-          - Life
-          - Annuity
-          - Reinsurance
-        effectiveDate:
-          type: string
-          format: date
-        expirationDate:
-          type: string
-          format: date
-        premiumAmount:
-          type: number
-          format: double
-        currency:
-          type: string
-          default: USD
-        insuredParty:
-          $ref: '#/components/schemas/PartyRequest'
-        coverages:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoverageRequest'
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid input data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
