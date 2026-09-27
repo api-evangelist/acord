@@ -220,17 +220,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Contact:
-      type: object
-      properties:
-        contactType:
-          type: string
-          enum:
-          - Phone
-          - Email
-          - Fax
-        value:
-          type: string
     ClaimList:
       type: object
       properties:
@@ -240,33 +229,6 @@ components:
             $ref: '#/components/schemas/Claim'
         pagination:
           $ref: '#/components/schemas/Pagination'
-    Address:
-      type: object
-      properties:
-        street1:
-          type: string
-        street2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-          default: US
-    Pagination:
-      type: object
-      properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        totalPages:
-          type: integer
-        totalItems:
-          type: integer
     Party:
       type: object
       properties:
@@ -294,6 +256,71 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Contact'
+    PartyRequest:
+      type: object
+      required:
+      - partyType
+      properties:
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum:
+          - Phone
+          - Email
+          - Fax
+        value:
+          type: string
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
     Claim:
       type: object
       properties:
@@ -334,44 +361,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
-    PartyRequest:
-      type: object
-      required:
-      - partyType
-      properties:
-        partyType:
-          type: string
-          enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
-          type: string
-        lastName:
-          type: string
-        organizationName:
-          type: string
-        taxId:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
     ClaimRequest:
       type: object
       required:
@@ -392,9 +381,20 @@ components:
           $ref: '#/components/schemas/PartyRequest'
         estimatedLossAmount:
           type: number
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
   responses:
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
       content:
         application/json:
           schema:
@@ -405,8 +405,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:

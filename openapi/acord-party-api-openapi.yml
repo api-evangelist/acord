@@ -126,49 +126,38 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Contact:
-      type: object
-      properties:
-        contactType:
-          type: string
-          enum:
-          - Phone
-          - Email
-          - Fax
-        value:
-          type: string
-    Address:
-      type: object
-      properties:
-        street1:
-          type: string
-        street2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-          default: US
-    Pagination:
-      type: object
-      properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        totalPages:
-          type: integer
-        totalItems:
-          type: integer
     Party:
       type: object
       properties:
         partyId:
           type: string
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    PartyRequest:
+      type: object
+      required:
+      - partyType
+      properties:
         partyType:
           type: string
           enum:
@@ -200,33 +189,44 @@ components:
             $ref: '#/components/schemas/Party'
         pagination:
           $ref: '#/components/schemas/Pagination'
-    PartyRequest:
+    Contact:
       type: object
-      required:
-      - partyType
       properties:
-        partyType:
+        contactType:
           type: string
           enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
+          - Phone
+          - Email
+          - Fax
+        value:
           type: string
-        lastName:
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Address:
+      type: object
+      properties:
+        street1:
           type: string
-        organizationName:
+        street2:
           type: string
-        taxId:
+        city:
           type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
   securitySchemes:
     oauth2:
       type: oauth2

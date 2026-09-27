@@ -288,121 +288,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Contact:
-      type: object
-      properties:
-        contactType:
-          type: string
-          enum:
-          - Phone
-          - Email
-          - Fax
-        value:
-          type: string
-    Policy:
-      type: object
-      description: ACORD NGDS Policy object representing an insurance contract
-      properties:
-        policyId:
-          type: string
-          description: Unique internal policy identifier
-        policyNumber:
-          type: string
-          description: Carrier-assigned policy number
-        lineOfBusiness:
-          type: string
-          enum:
-          - PropertyCasualty
-          - Life
-          - Annuity
-          - Reinsurance
-        status:
-          type: string
-          enum:
-          - Active
-          - Lapsed
-          - Cancelled
-          - Pending
-          - Expired
-        effectiveDate:
-          type: string
-          format: date
-        expirationDate:
-          type: string
-          format: date
-        premiumAmount:
-          type: number
-          format: double
-        currency:
-          type: string
-          default: USD
-        insuredParty:
-          $ref: '#/components/schemas/Party'
-        coverages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Coverage'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    PolicyUpdate:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - Active
-          - Lapsed
-          - Cancelled
-          - Pending
-          - Expired
-        expirationDate:
-          type: string
-          format: date
-        premiumAmount:
-          type: number
-        endorsements:
-          type: array
-          items:
-            type: object
-            properties:
-              endorsementNumber:
-                type: string
-              description:
-                type: string
-              effectiveDate:
-                type: string
-                format: date
-    Address:
-      type: object
-      properties:
-        street1:
-          type: string
-        street2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-          default: US
-    Pagination:
-      type: object
-      properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        totalPages:
-          type: integer
-        totalItems:
-          type: integer
     Coverage:
       type: object
       properties:
@@ -478,43 +363,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CoverageRequest'
-    CoverageRequest:
-      type: object
-      required:
-      - coverageType
-      - limit
-      properties:
-        coverageType:
-          type: string
-        limit:
-          type: number
-        deductible:
-          type: number
-        premium:
-          type: number
-        currency:
-          type: string
-          default: USD
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
-    PolicyList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Policy'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     PartyRequest:
       type: object
       required:
@@ -542,9 +390,161 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Contact'
+    CoverageRequest:
+      type: object
+      required:
+      - coverageType
+      - limit
+      properties:
+        coverageType:
+          type: string
+        limit:
+          type: number
+        deductible:
+          type: number
+        premium:
+          type: number
+        currency:
+          type: string
+          default: USD
+    PolicyList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Policy:
+      type: object
+      description: ACORD NGDS Policy object representing an insurance contract
+      properties:
+        policyId:
+          type: string
+          description: Unique internal policy identifier
+        policyNumber:
+          type: string
+          description: Carrier-assigned policy number
+        lineOfBusiness:
+          type: string
+          enum:
+          - PropertyCasualty
+          - Life
+          - Annuity
+          - Reinsurance
+        status:
+          type: string
+          enum:
+          - Active
+          - Lapsed
+          - Cancelled
+          - Pending
+          - Expired
+        effectiveDate:
+          type: string
+          format: date
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+          format: double
+        currency:
+          type: string
+          default: USD
+        insuredParty:
+          $ref: '#/components/schemas/Party'
+        coverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coverage'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    Contact:
+      type: object
+      properties:
+        contactType:
+          type: string
+          enum:
+          - Phone
+          - Email
+          - Fax
+        value:
+          type: string
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+          default: US
+    PolicyUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - Active
+          - Lapsed
+          - Cancelled
+          - Pending
+          - Expired
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+        endorsements:
+          type: array
+          items:
+            type: object
+            properties:
+              endorsementNumber:
+                type: string
+              description:
+                type: string
+              effectiveDate:
+                type: string
+                format: date
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
   responses:
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
       content:
         application/json:
           schema:
@@ -561,8 +561,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
