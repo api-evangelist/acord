@@ -70,26 +70,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    UnderwritingSubmission:
-      type: object
-      required:
-      - lineOfBusiness
-      - applicant
-      - requestedEffectiveDate
-      properties:
-        lineOfBusiness:
-          type: string
-        applicant:
-          $ref: '#/components/schemas/PartyRequest'
-        requestedEffectiveDate:
-          type: string
-          format: date
-        requestedExpirationDate:
-          type: string
-          format: date
-        riskDetails:
-          type: object
-          additionalProperties: true
     PartyRequest:
       type: object
       required:
@@ -117,24 +97,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Contact'
-    UnderwritingSubmissionResponse:
-      type: object
-      properties:
-        submissionId:
-          type: string
-        status:
-          type: string
-          enum:
-          - Received
-          - UnderReview
-          - Approved
-          - Declined
-          - RequiresMoreInfo
-        submittedAt:
-          type: string
-          format: date-time
-        notes:
-          type: string
     Contact:
       type: object
       properties:
@@ -162,6 +124,44 @@ components:
         country:
           type: string
           default: US
+    UnderwritingSubmissionResponse:
+      type: object
+      properties:
+        submissionId:
+          type: string
+        status:
+          type: string
+          enum:
+          - Received
+          - UnderReview
+          - Approved
+          - Declined
+          - RequiresMoreInfo
+        submittedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+    UnderwritingSubmission:
+      type: object
+      required:
+      - lineOfBusiness
+      - applicant
+      - requestedEffectiveDate
+      properties:
+        lineOfBusiness:
+          type: string
+        applicant:
+          $ref: '#/components/schemas/PartyRequest'
+        requestedEffectiveDate:
+          type: string
+          format: date
+        requestedExpirationDate:
+          type: string
+          format: date
+        riskDetails:
+          type: object
+          additionalProperties: true
   securitySchemes:
     oauth2:
       type: oauth2

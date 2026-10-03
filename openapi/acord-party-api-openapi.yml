@@ -126,33 +126,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Party:
-      type: object
-      properties:
-        partyId:
-          type: string
-        partyType:
-          type: string
-          enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
-          type: string
-        lastName:
-          type: string
-        organizationName:
-          type: string
-        taxId:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
     PartyRequest:
       type: object
       required:
@@ -180,15 +153,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Contact'
-    PartyList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Party'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     Contact:
       type: object
       properties:
@@ -200,17 +164,6 @@ components:
           - Fax
         value:
           type: string
-    Pagination:
-      type: object
-      properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        totalPages:
-          type: integer
-        totalItems:
-          type: integer
     Address:
       type: object
       properties:
@@ -227,6 +180,53 @@ components:
         country:
           type: string
           default: US
+    PartyList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Party:
+      type: object
+      properties:
+        partyId:
+          type: string
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
   securitySchemes:
     oauth2:
       type: oauth2

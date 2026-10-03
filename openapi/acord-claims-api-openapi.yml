@@ -220,42 +220,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ClaimList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Claim'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    Party:
-      type: object
-      properties:
-        partyId:
-          type: string
-        partyType:
-          type: string
-          enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
-          type: string
-        lastName:
-          type: string
-        organizationName:
-          type: string
-        taxId:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
     PartyRequest:
       type: object
       required:
@@ -294,17 +258,6 @@ components:
           - Fax
         value:
           type: string
-    Pagination:
-      type: object
-      properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        totalPages:
-          type: integer
-        totalItems:
-          type: integer
     Address:
       type: object
       properties:
@@ -321,6 +274,17 @@ components:
         country:
           type: string
           default: US
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
     Claim:
       type: object
       properties:
@@ -361,6 +325,53 @@ components:
         createdAt:
           type: string
           format: date-time
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    Party:
+      type: object
+      properties:
+        partyId:
+          type: string
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    ClaimList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Claim'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     ClaimRequest:
       type: object
       required:
@@ -381,20 +392,9 @@ components:
           $ref: '#/components/schemas/PartyRequest'
         estimatedLossAmount:
           type: number
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
   responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -405,8 +405,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
       content:
         application/json:
           schema:
