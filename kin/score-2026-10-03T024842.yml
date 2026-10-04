@@ -1,22 +1,20 @@
-# Kin Score artifact — acord — 2026-08-27T140727
+# Kin Score artifact — acord — 2026-10-03T024842
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: acord
-  schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
-  composite: 46.8
+  schema_version: 0.23.0
+  scored_at: '2026-10-03'
+  run_ts: 2026-10-03T024842
+  composite: 51.7
   band: developing
   facets:
-    discoverability: 74.1
-    contract_quality: 71.4
-    governance: 28.8
-    operational_transparency: 2.6
+    discoverability: 69.6
+    contract_quality: 27.9
+    contract_governance: 27.3
+    operational_transparency: 39.5
     developer_ergonomics: 57.1
-    commercial_clarity: 13.2
-    contract_governance: 28.8
-    access_clarity: 13.2
+    access_clarity: 75.0
   agent_readiness:
     score: 27.7
     band: agent-aware
@@ -44,20 +42,14 @@ kin_score:
     applies: true
     regime: Insurance
     regime_id: insurance
-    score: 51.5
+    score: 41.2
     matched_via: tags
-  needs_work:
-    owner: catalog
-    reasons:
-    - owner: catalog
-      reason: no_resolvable_host
-    detected: '2026-08-18'
-    note: Recorded so this provider's gaps can be attributed. Does not affect the
-      composite.
   provenance:
+    mcp: first-party
     agentic_access: derived
+    conformance: first-party
     contracts:
-      total: 4
-      derived: 0
-      coverage: 0.0
+      total: 5
+      derived: 5
+      coverage: 100.0
       callable: 0.0
