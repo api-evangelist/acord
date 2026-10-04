@@ -316,44 +316,17 @@ components:
               effectiveDate:
                 type: string
                 format: date
-    PartyRequest:
-      type: object
-      required:
-      - partyType
-      properties:
-        partyType:
-          type: string
-          enum:
-          - Insured
-          - Claimant
-          - Agent
-          - Broker
-          - Carrier
-        firstName:
-          type: string
-        lastName:
-          type: string
-        organizationName:
-          type: string
-        taxId:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Contact'
-    Contact:
+    Pagination:
       type: object
       properties:
-        contactType:
-          type: string
-          enum:
-          - Phone
-          - Email
-          - Fax
-        value:
-          type: string
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
     Address:
       type: object
       properties:
@@ -379,21 +352,6 @@ components:
             $ref: '#/components/schemas/Policy'
         pagination:
           $ref: '#/components/schemas/Pagination'
-    Coverage:
-      type: object
-      properties:
-        coverageId:
-          type: string
-        coverageType:
-          type: string
-        limit:
-          type: number
-        deductible:
-          type: number
-        premium:
-          type: number
-        currency:
-          type: string
     Error:
       type: object
       properties:
@@ -405,6 +363,66 @@ components:
           type: array
           items:
             type: string
+    PolicyRequest:
+      type: object
+      required:
+      - lineOfBusiness
+      - effectiveDate
+      - expirationDate
+      - insuredParty
+      properties:
+        lineOfBusiness:
+          type: string
+          enum:
+          - PropertyCasualty
+          - Life
+          - Annuity
+          - Reinsurance
+        effectiveDate:
+          type: string
+          format: date
+        expirationDate:
+          type: string
+          format: date
+        premiumAmount:
+          type: number
+          format: double
+        currency:
+          type: string
+          default: USD
+        insuredParty:
+          $ref: '#/components/schemas/PartyRequest'
+        coverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/CoverageRequest'
+    Party:
+      type: object
+      properties:
+        partyId:
+          type: string
+        partyType:
+          type: string
+          enum:
+          - Insured
+          - Claimant
+          - Agent
+          - Broker
+          - Carrier
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+        taxId:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
     Policy:
       type: object
       description: ACORD NGDS Policy object representing an insurance contract
@@ -454,11 +472,11 @@ components:
         updatedAt:
           type: string
           format: date-time
-    Party:
+    PartyRequest:
       type: object
+      required:
+      - partyType
       properties:
-        partyId:
-          type: string
         partyType:
           type: string
           enum:
@@ -481,50 +499,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Contact'
-    Pagination:
+    Contact:
       type: object
       properties:
-        page:
-          type: integer
-        pageSize:
-          type: integer
-        totalPages:
-          type: integer
-        totalItems:
-          type: integer
-    PolicyRequest:
-      type: object
-      required:
-      - lineOfBusiness
-      - effectiveDate
-      - expirationDate
-      - insuredParty
-      properties:
-        lineOfBusiness:
+        contactType:
           type: string
           enum:
-          - PropertyCasualty
-          - Life
-          - Annuity
-          - Reinsurance
-        effectiveDate:
+          - Phone
+          - Email
+          - Fax
+        value:
           type: string
-          format: date
-        expirationDate:
-          type: string
-          format: date
-        premiumAmount:
-          type: number
-          format: double
-        currency:
-          type: string
-          default: USD
-        insuredParty:
-          $ref: '#/components/schemas/PartyRequest'
-        coverages:
-          type: array
-          items:
-            $ref: '#/components/schemas/CoverageRequest'
     CoverageRequest:
       type: object
       required:
@@ -542,19 +527,22 @@ components:
         currency:
           type: string
           default: USD
+    Coverage:
+      type: object
+      properties:
+        coverageId:
+          type: string
+        coverageType:
+          type: string
+        limit:
+          type: number
+        deductible:
+          type: number
+        premium:
+          type: number
+        currency:
+          type: string
   responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid input data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Unauthorized - missing or invalid authentication
       content:
@@ -563,6 +551,18 @@ components:
             $ref: '#/components/schemas/Error'
     Forbidden:
       description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid input data
       content:
         application/json:
           schema:
