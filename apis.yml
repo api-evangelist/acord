@@ -160,6 +160,8 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/acord/refs/heads/main/json-schema/ngds-underwriting-submission-schema.json
 common:
+  - type: FinOps
+    url: finops/acord-finops.yml
   - type: CapabilityMap
     url: capabilities/acord-capability-edges.yml
     name: ACORD Business Capability Map
