@@ -1,0 +1,31 @@
+# Front Door AI Index — acord — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: acord
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.acord.org
+  final_host: www.acord.org
+  ownership: own
+  owner: acord
+  shares_host_with:
+  - underwriting-standards
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 6
+  band: 4
+  band_label: moderate
+  host_score: 6
+  density: 10.71
+  words: 560
+  tiers:
+    agentic: 2
+    core: 4
+    model: 0
+  ambiguous: 1
+  top_terms:
+    AI: 4
+    agentic: 2
+    automation: 1
