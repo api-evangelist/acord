@@ -84,7 +84,7 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 x-canonical:
-  generated: '2026-11-06'
+  generated: '2026-11-13'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - subscription
