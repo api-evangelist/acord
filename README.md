@@ -89,7 +89,7 @@ Each property below is a page on APIs.io carrying the machine-readable artifact 
 
 Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Acord Agentic Access](https://apis.io/agentic-access/acord/acord-agentic-access/)
+- [ACORD Agentic Access](https://apis.io/agentic-access/acord/acord-agentic-access/)
 
 #### JSON Schema (16)
 
@@ -116,8 +116,8 @@ The data models the API reads and writes.
 
 Data models expressed in JSON Structure.
 
-- [Acord Claim Structure](https://apis.io/json-structure/acord/acord-claim-structure/)
-- [Acord Policy Structure](https://apis.io/json-structure/acord/acord-policy-structure/)
+- [ACORD Claim Structure](https://apis.io/json-structure/acord/acord-claim-structure/)
+- [ACORD Policy Structure](https://apis.io/json-structure/acord/acord-policy-structure/)
 - [Ngds Address Structure](https://apis.io/json-structure/acord/ngds-address-structure/)
 - [Ngds Claim List Structure](https://apis.io/json-structure/acord/ngds-claim-list-structure/)
 - [Ngds Claim Request Structure](https://apis.io/json-structure/acord/ngds-claim-request-structure/)
@@ -150,8 +150,8 @@ The provider's domain terms, defined.
 
 Example requests and responses.
 
-- [Acord Claim Example](https://apis.io/examples/acord/acord-claim-example/)
-- [Acord Policy Example](https://apis.io/examples/acord/acord-policy-example/)
+- [ACORD Claim Example](https://apis.io/examples/acord/acord-claim-example/)
+- [ACORD Policy Example](https://apis.io/examples/acord/acord-policy-example/)
 - [Ngds Address Example](https://apis.io/examples/acord/ngds-address-example/)
 - [Ngds Claim List Example](https://apis.io/examples/acord/ngds-claim-list-example/)
 - [Ngds Claim Request Example](https://apis.io/examples/acord/ngds-claim-request-example/)
@@ -188,32 +188,32 @@ Spectral rulesets for the provider's contracts.
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [Acord Authentication](https://apis.io/security/acord/acord-authentication/)
-- [Acord Domain Security](https://apis.io/security/acord/acord-domain-security/)
+- [ACORD Authentication](https://apis.io/security/acord/acord-authentication/)
+- [ACORD Domain Security](https://apis.io/security/acord/acord-domain-security/)
 
 #### OAuth scopes (1)
 
 The permissions the API asks for.
 
-- [Acord Scopes](https://apis.io/scopes/acord/acord-scopes/)
+- [ACORD Scopes](https://apis.io/scopes/acord/acord-scopes/)
 
 #### Plans and pricing (1)
 
 Published plans, tiers and prices.
 
-- [Acord Plans Pricing](https://apis.io/plans/acord/acord-plans-pricing/)
+- [ACORD Plans Pricing](https://apis.io/plans/acord/acord-plans-pricing/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [Acord Rate Limits](https://apis.io/rate-limits/acord/acord-rate-limits/)
+- [ACORD Rate Limits](https://apis.io/rate-limits/acord/acord-rate-limits/)
 
 #### FinOps (1)
 
 What the API costs to run, by operation.
 
-- [Acord Finops](https://apis.io/finops/acord/acord-finops/)
+- [ACORD Finops](https://apis.io/finops/acord/acord-finops/)
 
 ## Where to find this API
 
@@ -231,18 +231,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 50.2** — developing · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 50.4** — developing · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 69.6 |
 | Contract quality | 27.9 |
 | Contract governance | 27.3 |
-| Operational transparency | 39.5 |
+| Operational transparency | 35.7 |
 | Developer ergonomics | 57.1 |
-| Access clarity | 67.1 |
+| Access clarity | 74.5 |
 
-**Agent readiness 28.2** — agent-aware
+**Agent readiness 28.3** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -252,7 +252,7 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | MCP Server | — |
 | Auth Clarity | negotiable (partial credit) |
 | Idempotency | — |
-| Error Semantics | — |
+| Error Semantics | derived (partial credit) |
 | OpenAPI Examples | verified |
 | Rate Limit Signal | documented (partial credit) |
 | Event Surface Described | — |
@@ -267,8 +267,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | — |
 | Operation Distinctiveness | distinct |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 41.2** — Insurance
+**Regulatory alignment 36.0** — Insurance
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/acord/](https://apis.io/providers/acord/).
 
